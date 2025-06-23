@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Dimension;
@@ -16,6 +17,7 @@ public class appview extends JFrame{
 
     private JPanel mapPanel, boxPanel, resultsPanel;
     private JButton rstBtn, clrBtn, mapBtn;
+    private JLabel map;
 
     private foodSpot[] nodes;
     
@@ -34,17 +36,22 @@ public class appview extends JFrame{
         this.setLayout(null);                // Change layout later
         this.getContentPane().setBackground(new Color(58,79,60));
         
+        
+
         mapPanel = new JPanel();
         mapPanel.setLayout(null);
         mapPanel.setBackground(Color.CYAN);
         mapPanel.setBounds(15, 15, 756, 423);
-        //mapPanel.setPreferredSize(new Dimension(756, 423));
+        
+        Image img = new ImageIcon("images/map.png").getImage();                                 // This is the map image
+        map = new JLabel(new ImageIcon(img.getScaledInstance(756, 423, Image.SCALE_SMOOTH)));   // Scale down the map to fit within the panel
+        map.setBounds(0, 0, 756, 423);
+        mapPanel.add(map);
 
         boxPanel = new JPanel();
         boxPanel.setLayout(new GridLayout(4, 5));
         boxPanel.setBackground(new Color(56,94,60));
         boxPanel.setBounds(15, 453, 600, 200);
-        //boxPanel.setPreferredSize(new Dimension(600, 200));
 
         resultsPanel = new JPanel();
         resultsPanel.setLayout(null);
