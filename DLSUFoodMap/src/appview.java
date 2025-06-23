@@ -17,6 +17,7 @@ public class appview extends JFrame{
 
     private JPanel mapPanel, boxPanel, resultsPanel;
     private JButton rstBtn, clrBtn, mapBtn;
+    JCheckBox[] cBox;
     private JLabel map;
 
     private foodSpot[] nodes;
@@ -58,7 +59,7 @@ public class appview extends JFrame{
         resultsPanel.setBackground(Color.PINK);
         resultsPanel.setBounds(846, 15, 404, 650);
         
-        JCheckBox[] cBox = new JCheckBox[this.nodes.length];
+        cBox = new JCheckBox[this.nodes.length];
         for (int i = 0; i < nodes.length; i++) {
             cBox[i] = new JCheckBox(this.nodes[i].getID() + " | " + this.nodes[i].getName());
             cBox[i].setFocusable(false);
@@ -86,9 +87,6 @@ public class appview extends JFrame{
         mapBtn.setFocusable(false);
         mapBtn.setBounds(630, 623, 75, 30);
 
-        
-        
-
         this.add(mapPanel);
         this.add(boxPanel);
         this.add(resultsPanel);
@@ -97,4 +95,39 @@ public class appview extends JFrame{
         this.add(mapBtn);
         this.setVisible(true);
     }
+
+    /*
+     * Method to update labels on the resultsPanel later
+     */
+    public void updateLabels() {
+        
+    }
+
+    public void clearCB() {
+        for(int i=0; i < cBox.length; i++){
+            this.cBox[i].setSelected(false);
+        }
+    }
+
+    public void resetCB() {
+        for(int i=0; i < cBox.length; i++){
+            this.cBox[i].setSelected(true);
+        }
+    }
+
+    /*
+     * Button listeners
+     */
+
+    public void clrBtnActionListener(ActionListener actionListener) {
+		this.clrBtn.addActionListener(actionListener);
+	}
+
+    public void rstBtnActionListener(ActionListener actionListener) {
+		this.rstBtn.addActionListener(actionListener);
+	}
+
+    public void mapBtnActionListener(ActionListener actionListener) {
+		this.mapBtn.addActionListener(actionListener);
+	}
 }
