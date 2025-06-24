@@ -1,5 +1,6 @@
 package src.graphrel;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,7 +15,7 @@ import src.file_man.ReadFile;
  * Graph
  */
 public class Graph {
-  public static final String FILELOC = "./src/test.csv";
+  public static final String FILENAME = "test.csv";
   ReadFile rf;
   // Map implmentation from https://www.baeldung.com/java-graphs
   // TODO: Fix this, for our current implmentation disregards Node creation (does not save the node)
@@ -30,7 +31,7 @@ public class Graph {
    */
   public Graph(){
     rf = new ReadFile();
-    rf.initRead(FILELOC);
+    rf.initRead(FILENAME);
     adjVertices = new HashMap<>();
     nameToUid = new HashMap<>();
     UidToNode = new HashMap<>();

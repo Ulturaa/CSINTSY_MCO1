@@ -2,6 +2,7 @@ package src.file_man;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,8 @@ public class ReadFile {
   // CSV parsing from https://www.baeldung.com/java-csv-file-array
   public void initRead(String fileName) {
     Boolean skipFirst = false;
-    try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+    try (BufferedReader br = new BufferedReader(new InputStreamReader(
+            this.getClass().getResourceAsStream("../" + fileName)))) {
       String line = "";
       while ((line = br.readLine()) != null) {
         if (line.charAt(0) == '#') { // implementation of comment within CSV with # token
