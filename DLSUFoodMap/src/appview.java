@@ -17,8 +17,10 @@ public class appview extends JFrame{
 
     private JPanel mapPanel, boxPanel, resultsPanel;
     private JButton rstBtn, clrBtn, mapBtn;
-    JCheckBox[] cBox;
+    private JCheckBox[] cBox;
     private JLabel map;
+    
+    // Create a new class for the results tab? Since both sections will contain the same thing IDK
 
     private foodSpot[] nodes;
     
@@ -34,10 +36,8 @@ public class appview extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);  
-        this.setLayout(null);                // Change layout later
+        this.setLayout(null);
         this.getContentPane().setBackground(new Color(58,79,60));
-        
-        
 
         mapPanel = new JPanel();
         mapPanel.setLayout(null);
