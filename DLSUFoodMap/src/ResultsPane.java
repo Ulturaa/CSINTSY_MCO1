@@ -1,46 +1,34 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
-import javax.swing.BoxLayout;
-
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
 
 public class ResultsPane extends JPanel {
 
-    private JLabel title, score, path, timeComp, memComp, optimality;
+    private JLabel title;
+    private JTextArea text;
 
     public ResultsPane(String type) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.title = new JLabel("Search Alg " + type);
-        this.score = new JLabel("Score:\n   0");
-        this.path = new JLabel("Path:\n   ABCD");
-        this.timeComp = new JLabel("Time Complexity:\n   0s");
-        this.memComp = new JLabel("Memory Complexity:\n   0mp");
-        this.optimality = new JLabel("Optimal:\n   Yes");
+        
+        this.title = new JLabel(type);
+        title.setFont(new Font("Dialog", Font.PLAIN, 25));
+        title.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        this.text = new JTextArea("Score:    0\n\n"+"Path: ABCDEFGHIJKLMNOPQRSTUVWXYZ\n\n"+"Time Complexity:   0s\n\n"+"Memory Complexity:   0mp\n\n"+"Optimal:    Yes\n");
+        text.setLineWrap(true);
+        text.setWrapStyleWord(true);  // Wrap at word boundaries
+        text.setEditable(false);      // Make it read-only
+        text.setOpaque(false);        // Optional: make it blend with background
+        text.setFocusable(false);     // Optional: skip tab focus
+        text.setBorder(null);         // Optional: remove borders
+        text.setFont(new Font("Dialog", Font.PLAIN, 15));
+        
         this.setOpaque(false);
-
         this.add(title);
-        this.add(score);
-        this.add(path);
-        this.add(timeComp);
-        this.add(memComp);
-        this.add(optimality);
+        this.add(text);
     }
 
     public void UpdateTexts(int score, String path, String tc, String mc, String optimality){
-        this.score.setText("Score:\n   " + score);
-        this.path.setText("Path:\n   " + path);
-        this.timeComp.setText("Time Complexity:\n   " + tc);
-        this.memComp.setText("Memory Complexity:\n   " + mc);
-        this.optimality.setText("Optimal:\n   " + optimality);
+        this.text.setText("Score:" + score + "\n\nPath: " + path + "\n\nTime Complexity: " + tc + "\n\nMemory Complexity: " + mc + "\n\nOptimal: " + optimality);
     }
 }

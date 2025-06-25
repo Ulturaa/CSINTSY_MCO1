@@ -4,6 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
+import javax.swing.BorderFactory;
+import javax.swing.JTextArea;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -89,8 +91,9 @@ public class appview extends JFrame{
         mapBtn.setBounds(630, 623, 75, 30);
 
         rA = new ResultsPane("Blind Search");
-        rA.setOpaque(false);
+        rA.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         rB = new ResultsPane("Heuristic Search");
+        rB.setBorder(BorderFactory.createEmptyBorder(10,0,10,10));
         resultsPanel.add(rA);
         resultsPanel.add(rB);
 
