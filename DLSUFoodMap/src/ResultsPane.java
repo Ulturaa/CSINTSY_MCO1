@@ -26,6 +26,14 @@ public class ResultsPane extends JPanel {
         this.timeComp = new JLabel("Time Complexity: ");
         this.memComp = new JLabel("Memory Complexity: ");
         this.optimality = new JLabel("Optimal: Yes");
+        this.setOpaque(false);
+
+        this.add(title);
+        this.add(score);
+        this.add(path);
+        this.add(timeComp);
+        this.add(memComp);
+        this.add(optimality);
     }
 
     public void UpdateTexts(int score, String path, String tc, String mc, String optimality){

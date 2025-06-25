@@ -19,6 +19,7 @@ public class appview extends JFrame{
     private JButton rstBtn, clrBtn, mapBtn;
     private JCheckBox[] cBox;
     private JLabel map;
+    private ResultsPane rA, rB;
     
     // Create a new class for the results tab? Since both sections will contain the same thing IDK
 
@@ -55,7 +56,7 @@ public class appview extends JFrame{
         boxPanel.setBounds(15, 453, 600, 200);
 
         resultsPanel = new JPanel();
-        resultsPanel.setLayout(null);
+        resultsPanel.setLayout(new GridLayout());
         resultsPanel.setBackground(Color.PINK);
         resultsPanel.setBounds(846, 15, 404, 650);
         
@@ -86,6 +87,12 @@ public class appview extends JFrame{
         mapBtn.setForeground(Color.BLACK);
         mapBtn.setFocusable(false);
         mapBtn.setBounds(630, 623, 75, 30);
+
+        rA = new ResultsPane("Blind Search");
+        rA.setOpaque(false);
+        rB = new ResultsPane("Heuristic Search");
+        resultsPanel.add(rA);
+        resultsPanel.add(rB);
 
         this.add(mapPanel);
         this.add(boxPanel);
