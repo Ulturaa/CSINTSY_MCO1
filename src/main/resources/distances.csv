@@ -1,0 +1,11 @@
+# Distances based on Line of Sight
+# Value or Heuristic are set within the node
+# Heuristic to be added to another column
+Destination A,Destination B,Distance (m)
+University Mall,McDonald's,37
+Sherwood,Jollibee,57
+Sherwood,Green Mall,95
+Sherwood,Perico's,72
+Sherwood,One Archer's,124
+Sherwood,Dagonoy St.,202
+Jollibee,Dagonoy St.,150

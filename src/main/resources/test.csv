@@ -1,0 +1,10 @@
+# comment with '#'
+# Might add another column for Heuristics
+# Heuristic can be just the direct distance between Node A and Node B
+Node A,Node B,Edge_val
+ A,B,2,7
+ A,E,3,7
+ B,C,1,6
+ B,G,9,6
+ E,D,6,4
+ D,G,1,1
