@@ -18,7 +18,7 @@ public class Graph {
   ReadFile rf;
   // Map implmentation from https://www.baeldung.com/java-graphs
   private Map<Integer, ArrayList<Edge>> adjVertices;
-  Map<Integer, ArrayList<Node>> adjNodes;
+  // Map<Integer, ArrayList<Node>> adjNodes;
   Map<String, Integer> nameToUid;
   Map<Integer, Node> UidToNode;
 
@@ -121,14 +121,27 @@ public class Graph {
     adjVertices.get(from).add(newEdge);
   }
 
-  // TODO: Add removal of Node will cause removal of its connection to other edges
-  // perhaps iterate to the node (adjVertices) to retrieve nodes connected
-  // remove connections from other nodes 
   public void removeNodeConnections(int uid) {
     ArrayList<Edge> connections = adjVertices.get(uid);
-    // remove destination edge declaration
     for (Edge edge : connections) {
       adjVertices.get(edge.dest).removeIf(e -> e.dest == uid);
     }
   }
+
+  // public Map<Integer, ArrayList<Edge>> getadjVertices() {
+  //   return adjVertices;
+  // }
+
+  public ArrayList<Edge> getNodeEdges(int nodeUid) {
+    return adjVertices.get(nodeUid);
+  }
+
+  public int getNumberOfNodes() {
+    return this.UidToNode.size();
+  }
+
+  public Map<Integer, Node> getUidToNode() {
+    return UidToNode;
+  }
+
 }

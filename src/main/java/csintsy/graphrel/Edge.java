@@ -11,5 +11,14 @@ public class Edge {
     this.dest = dest;
     this.weight = weight;
   }
+
+  public int getDest() {
+    return this.dest;
+  }
+
+  public int getWeight() {
+    return this.weight;
+  }
+
   
 }
