@@ -1,5 +1,2 @@
-## Initial Graph Implementaion for the project
-
-to build the program use maven `mvn package`
-
-Afterwards, invoke `java -cp target/mco1-1.0-SNAPSHOT.jar csintsy.App`
+Used example in the test.csv, please check with other examples but it works fine naman! 
+![](https://raw.githubusercontent.com/Codecademy/docs/main/media/a-star-tree-8.png)
