@@ -1,1 +1,0 @@
-# CSINTSY_MCO1
