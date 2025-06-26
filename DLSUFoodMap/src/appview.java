@@ -14,6 +14,8 @@ import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class appview extends JFrame{
 
@@ -140,4 +142,22 @@ public class appview extends JFrame{
     public void mapBtnActionListener(ActionListener actionListener) {
 		this.mapBtn.addActionListener(actionListener);
 	}
+
+    // hardcoded values for now
+    public void updateBlindSearch(String text) {
+        rA.UpdateTexts(0, text, "--", "--", "Yes");
+    }
+
+    public void updateHeuristicSearch(String text) {
+        rB.UpdateTexts(0, text, "--", "--", "Yes");
+    }
+
+    public void updateBlindSearch(int score, String path, String time, String memory, String optimal) {
+        rA.UpdateTexts(score, path, time, memory, optimal);
+    }
+
+    public void updateHeuristicSearch(int score, String path, String time, String memory, String optimal) {
+        rB.UpdateTexts(score, path, time, memory, optimal);
+    }
+
 }
