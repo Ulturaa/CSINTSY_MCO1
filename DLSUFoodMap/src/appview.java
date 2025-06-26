@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 public class appview extends JFrame{
 
     private JPanel mapPanel, boxPanel, resultsPanel;
-    private JButton rstBtn, clrBtn, mapBtn;
+    private JButton rstBtn, clrBtn, mapBtn, addBtn, delBtn;
     private JCheckBox[] cBox;
     private JLabel map;
     private ResultsPane rA, rB;
@@ -73,27 +73,36 @@ public class appview extends JFrame{
         }
 
         clrBtn = new JButton("Clear");
-        //clrBtn.setBorder(new EtchedBorder(10)); //10 is the radius
         clrBtn.setForeground(Color.BLACK);
         clrBtn.setFocusable(false);
         clrBtn.setBounds(630, 453, 75, 30);
 
         rstBtn = new JButton("Reset");
-        //rstBtn.setBorder(new EtchedBorder(10)); //10 is the radius
         rstBtn.setForeground(Color.BLACK);
         rstBtn.setFocusable(false);
-        rstBtn.setBounds(630, 498, 75, 30);
+        rstBtn.setBounds(720, 453, 75, 30);
 
         mapBtn = new JButton("Map");
-        //mapBtn.setBorder(new EtchedBorder(10)); //10 is the radius
         mapBtn.setForeground(Color.BLACK);
         mapBtn.setFocusable(false);
         mapBtn.setBounds(630, 623, 75, 30);
 
+        addBtn = new JButton("Add");
+        addBtn.setForeground(Color.BLACK);
+        addBtn.setFocusable(false);
+        addBtn.setBounds(630, 503, 75, 30);
+        
+        delBtn = new JButton("Delete");
+        delBtn.setForeground(Color.BLACK);
+        delBtn.setFocusable(false);
+        delBtn.setBounds(720, 503, 75, 30);
+
+
+
         rA = new ResultsPane("Blind Search");
-        rA.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        rA.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); // added boarder to look like padding
         rB = new ResultsPane("Heuristic Search");
-        rB.setBorder(BorderFactory.createEmptyBorder(10,0,10,10));
+        rB.setBorder(BorderFactory.createEmptyBorder(10,0,10,10));  // added boarder to look like padding
         resultsPanel.add(rA);
         resultsPanel.add(rB);
 
@@ -103,6 +112,8 @@ public class appview extends JFrame{
         this.add(clrBtn);
         this.add(rstBtn);
         this.add(mapBtn);
+        this.add(addBtn);
+        this.add(delBtn);
         this.setVisible(true);
     }
 
