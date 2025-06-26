@@ -29,6 +29,6 @@ public class ResultsPane extends JPanel {
     }
 
     public void UpdateTexts(int score, String path, String tc, String mc, String optimality){
-        this.text.setText("Score:" + score + "\n\nPath: " + path + "\n\nTime Complexity: " + tc + "\n\nMemory Complexity: " + mc + "\n\nOptimal: " + optimality);
+        this.text.setText("Score: " + score + "\n\nPath: " + path + "\n\nTime Complexity: " + tc + "\n\nMemory Complexity: " + mc + "\n\nOptimal: " + optimality);
     }
 }

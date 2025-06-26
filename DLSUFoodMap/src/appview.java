@@ -55,7 +55,7 @@ public class appview extends JFrame{
         mapPanel.add(map);
 
         boxPanel = new JPanel();
-        boxPanel.setLayout(new GridLayout(4, 5));
+        boxPanel.setLayout(new FlowLayout());
         boxPanel.setBackground(new Color(56,94,60));
         boxPanel.setBounds(15, 453, 600, 200);
 
@@ -98,8 +98,6 @@ public class appview extends JFrame{
         delBtn.setForeground(Color.BLACK);
         delBtn.setFocusable(false);
         delBtn.setBounds(720, 503, 75, 30);
-
-
 
         rA = new ResultsPane("Blind Search");
         rA.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); // added boarder to look like padding
