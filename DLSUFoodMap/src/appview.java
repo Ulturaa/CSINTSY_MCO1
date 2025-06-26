@@ -152,6 +152,14 @@ public class appview extends JFrame{
 		this.mapBtn.addActionListener(actionListener);
 	}
 
+    public void addBtnActionListener(ActionListener actionListener) {
+		this.addBtn.addActionListener(actionListener);
+	}
+
+    public void delBtnActionListener(ActionListener actionListener) {
+		this.delBtn.addActionListener(actionListener);
+	}
+
     // hardcoded values for now
     public void updateBlindSearch(String text) {
         rA.UpdateTexts(0, text, "--", "--", "Yes");

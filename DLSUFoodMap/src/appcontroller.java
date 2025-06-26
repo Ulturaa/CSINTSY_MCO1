@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class appcontroller {
 
@@ -21,8 +22,6 @@ public class appcontroller {
             graph.addEdge(nodes[i].getID(), nodes[i + 1].getID(), 1);
         }
 
-        this.av = new appview(nodes);
-
         this.av.clrBtnActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,6 +40,28 @@ public class appcontroller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 runAlgorithms();
+            }
+        });
+
+        this.av.addBtnActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Added Record - Change later!");
+            }
+        });
+
+        this.av.delBtnActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] resto = new String[nodes.length];          // Create array
+                for(int i=0; i<nodes.length; i++){                  // Fill array for combobox input
+                    resto[i] = nodes[i].getName();
+                } 
+                String op = (String)JOptionPane.showInputDialog(null, "Which node to delete?", "Delete Node", JOptionPane.PLAIN_MESSAGE, null, resto, resto[0]);
+                
+                if((op != null) && (op.length() > 0)){  // Print if confirmed
+                    System.out.println("Option dialogue: " + op);
+                }
             }
         });
     }
