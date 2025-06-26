@@ -72,4 +72,13 @@ public class Graph{ //private?
             System.out.println(entry.getKey() + " = " + entry.getValue());
         }
     }
+
+    public List<Character> getNeighbors(char node) {
+        return graph.getOrDefault(node, new ArrayList<>());
+    }
+
+    // Returns the foodSpot by its ID
+    public foodSpot getFoodSpot(char id) {
+        return nodes.get(id);
+    }
 }
