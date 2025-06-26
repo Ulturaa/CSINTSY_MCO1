@@ -1,7 +1,4 @@
 # Distances based on Line of Sight
-# La Casite (J) -> Perico's  (Br. Andrew (J))
-# Remove J (Enrique Razon)
-# Distance are set in edges
 # Value or Heuristic are set within the node
 # Heuristic to be added to another column
 Destination A,Destination B,Distance (m)
