@@ -14,7 +14,7 @@ public class ResultsPane extends JPanel {
         title.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        this.text = new JTextArea("Score:    0\n\n"+"Path: ABCDEFGHIJKLMNOPQRSTUVWXYZ\n\n"+"Time Complexity:   0s\n\n"+"Memory Complexity:   0mp\n\n"+"Optimal:    Yes\n");
+        this.text = new JTextArea();
         text.setLineWrap(true);
         text.setWrapStyleWord(true);  // Wrap at word boundaries
         text.setEditable(false);      // Make it read-only
