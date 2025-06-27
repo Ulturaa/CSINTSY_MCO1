@@ -9,7 +9,7 @@ public class Node {
   private static int idCounter = 0;
   private int uid; 
   private String name;
-  private int x, y; // for heuristic (optional)
+  private int x = 0; // initialize Heuristic val to 0
 
 
   /**
@@ -48,10 +48,6 @@ public class Node {
   // A STAR
 public int getX() {
     return x;
-}
-
-public int getY() {
-    return y;
 }
 
 public void setVal(int val) {

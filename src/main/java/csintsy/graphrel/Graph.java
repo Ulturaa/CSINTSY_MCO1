@@ -15,18 +15,21 @@ import csintsy.file_man.ReadFile;
  */
 public class Graph {
   public static final String FILENAME = "test.csv";
+  public static final String FILE_H = FILENAME.split("[.csv]")[0];
   ReadFile rf;
   // Map implmentation from https://www.baeldung.com/java-graphs
   private Map<Integer, ArrayList<Edge>> adjVertices;
   public Map<String, Integer> nameToUid;
   Map<Integer, Node> UidToNode;
+  boolean hasHeuristicFile;
 
   /**
    * Initialize Nodes and Edges within Graph constructor.
    */
   public Graph(){
+    System.out.println("FILE_H: " + FILE_H);
     rf = new ReadFile();
-    rf.initRead(FILENAME);
+    hasHeuristicFile = rf.initRead(FILE_H);            // read file with node and heuristic val first
     adjVertices = new HashMap<>();
     nameToUid = new HashMap<>();
     UidToNode = new HashMap<>();
@@ -37,6 +40,25 @@ public class Graph {
    * Initialize Graph with the values read from file the file given
    */
   private void initGraph() {
+    // read heuristic file first
+    if (hasHeuristicFile) {
+      for (List<String> row : rf.records) {
+        String nodeName = row.get(0);
+        int heuristicVal;
+        try {
+          heuristicVal = Integer.parseInt(row.get(1));
+        } catch (NumberFormatException e) {
+          heuristicVal = 0;
+        }
+        if (!nameToUid.containsKey(nodeName)) {
+          Node newFromNode = new Node(nodeName, heuristicVal);
+          addNode(newFromNode);
+        }
+      }
+    }
+    // read csv containing edges of node
+    rf.initRead(FILENAME);
+
     for (List<String> row : rf.records) {
       if (row.size() < 3) continue;
 
@@ -50,22 +72,25 @@ public class Graph {
         weight = 0;
       }
 
-      int heuristic = 0;
-      if (row.size() >= 4) {
-        try {
-          heuristic = Integer.parseInt(row.get(3));
-        } catch (NumberFormatException e) {
-          heuristic = 0;
-        }
-      }
+      // int heuristic = 0;
+      // if (row.size() >= 4) {
+      //   try {
+      //     heuristic = Integer.parseInt(row.get(3));
+      //   } catch (NumberFormatException e) {
+      //     heuristic = 0;
+      //   }
+      // }
 
       // Create or update FROM node
       if (!nameToUid.containsKey(fromNodeName)) {
-        Node newFromNode = new Node(fromNodeName, heuristic);
+        Node newFromNode = new Node(fromNodeName);
         addNode(newFromNode);
-      } else {
-        int fromUid = nameToUid.get(fromNodeName);
-        UidToNode.get(fromUid).setVal(heuristic); // update heuristic if already exists
+      }
+
+      // Create to node
+      if (!nameToUid.containsKey(toNodeName)) {
+        Node newToNode = new Node(toNodeName, 0);
+        addNode(newToNode);
       }
 
       // Add undirected edge
@@ -95,7 +120,7 @@ public void printNodeEdges() {
     System.out.print(currentNode.getName() + " (h=" + currentNode.getVal() + ") -> ");
 
     for (Edge edge : edges) {
-      Node destNode = UidToNode.get(edge.dest);
+      Node destNode = UidToNode.get(edge.destUid);
       System.out.print(destNode.getName() + "[" + edge.weight + "] ");
     }
   }

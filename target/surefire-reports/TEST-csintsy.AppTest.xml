@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.1" name="csintsy.AppTest" time="0.024" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.1" name="csintsy.AppTest" time="0.022" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="24"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -13,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-24-openjdk/lib"/>
-    <property name="sun.java.command" value="/home/sai/Documents/School/AY2024-2025/T3/CSINTSY/CSINTSY_MCO1/target/surefire/surefirebooter-20250627174831505_3.jar /home/sai/Documents/School/AY2024-2025/T3/CSINTSY/CSINTSY_MCO1/target/surefire 2025-06-27T17-48-31_447-jvmRun1 surefire-20250627174831505_1tmp surefire_0-20250627174831505_2tmp"/>
+    <property name="sun.java.command" value="/home/sai/Documents/School/AY2024-2025/T3/CSINTSY/CSINTSY_MCO1/target/surefire/surefirebooter-20250628050957493_3.jar /home/sai/Documents/School/AY2024-2025/T3/CSINTSY/CSINTSY_MCO1/target/surefire 2025-06-28T05-09-57_443-jvmRun1 surefire-20250628050957493_1tmp surefire_0-20250628050957493_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/sai/Documents/School/AY2024-2025/T3/CSINTSY/CSINTSY_MCO1/target/test-classes:/home/sai/Documents/School/AY2024-2025/T3/CSINTSY/CSINTSY_MCO1/target/classes:/home/sai/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.11.0/junit-jupiter-api-5.11.0.jar:/home/sai/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/sai/.m2/repository/org/junit/platform/junit-platform-commons/1.11.0/junit-platform-commons-1.11.0.jar:/home/sai/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/sai/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.11.0/junit-jupiter-params-5.11.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -28,7 +27,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/sai/Documents/School/AY2024-2025/T3/CSINTSY/CSINTSY_MCO1/target/surefire/surefirebooter-20250627174831505_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/sai/Documents/School/AY2024-2025/T3/CSINTSY/CSINTSY_MCO1/target/surefire/surefirebooter-20250628050957493_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="24.0.1"/>
     <property name="user.name" value="sai"/>

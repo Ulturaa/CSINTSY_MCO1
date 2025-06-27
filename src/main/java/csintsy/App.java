@@ -1,8 +1,8 @@
 package csintsy;
 
-<<<<<<< HEAD
 import csintsy.graphrel.Edge;
 import csintsy.graphrel.Graph;
+import csintsy.graphrel.Node;
 import csintsy.pathfinding_algo.Path;
 import csintsy.pathfinding_algo.UniformCost;
 import csintsy.pathfinding_algo.AStar;

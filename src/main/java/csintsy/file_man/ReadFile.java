@@ -18,12 +18,11 @@ public class ReadFile {
   public ReadFile() {}
 
   // CSV parsing from https://www.baeldung.com/java-csv-file-array
-  public void initRead(String fileName) {
-    Boolean skipFirst = false;
+  public boolean initRead(String fileName) {
+    boolean skipFirst = false;
     try (BufferedReader br = new BufferedReader(new InputStreamReader(
             this.getClass().getResourceAsStream("/" + fileName)))) {
       String line;
-      boolean skipFirst = true;
 
       while ((line = br.readLine()) != null) {
         line = line.trim();
@@ -41,8 +40,9 @@ public class ReadFile {
       System.out.print("Error: ");
       System.err.println(e.getMessage());
       System.out.print(" Cannot open file");
-      System.exit(1);
+      return false; // cannot find file
     }
+    return true; // file found
   }
 
   private static List<String> parseLine(String line) {

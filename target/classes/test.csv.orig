@@ -1,8 +1,8 @@
 # comment with '#'
 # Might add another column for Heuristics
 # Heuristic can be just the direct distance between Node A and Node B
-<<<<<<< HEAD
 Node A,Node B,Edge_val
+<<<<<<< HEAD
 A,B,2
 A,E,3
 B,C,1
@@ -10,23 +10,21 @@ B,G,9
 E,D,6
 D,G,1
 =======
-Node A,Node B,Edge_val,Heuristics
 S,A,4,7
 S,B,10,7
+S,C,11,7
 A,B,8,8
 A,D,5,8
-B,D,15,6
-C,D,8,5
-C,E,20,5
-C,F,2,5
 D,H,16,5
 D,I,20,5
 D,F,1,5
 F,G,13,3
 
-# Child nodes
-G,G,0,0
+# Child nodes with no outgoing connections can still exist 
+# just register them with just a self-loop or a dummy 0-cost
+B,B,0,6
+C,C,0,5
 H,H,0,7
 I,I,0,4
-E,E,0,3
+G,G,0,0
 >>>>>>> origin/astarwawo
