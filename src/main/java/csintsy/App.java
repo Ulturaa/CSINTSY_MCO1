@@ -1,6 +1,9 @@
 package csintsy;
 
+import csintsy.graphrel.Edge;
 import csintsy.graphrel.Graph;
+import csintsy.pathfinding_algo.Path;
+import csintsy.pathfinding_algo.UniformCost;
 
 import java.util.Scanner;
 
@@ -24,6 +27,7 @@ public class App {
       System.out.println("3. Add Node");
       System.out.println("4. Remove Node");
       System.out.println("5. Exit");
+      System.out.println("6. Compute UCS");
       char cIn = myObj.next().charAt(0);
       switch (cIn) {
         case '1':
@@ -54,6 +58,15 @@ public class App {
           System.exit(0);
           myObj.close();
           break;
+        case'6':
+          UniformCost uCost = new UniformCost(currGraph);
+          System.out.print("Enter node source: ");
+          int source = currGraph.nameToUid.get(myObj.next());
+          System.out.print("Enter destination node: ");
+          int dest = currGraph.nameToUid.get(myObj.next());
+          uCost.calcPath(source, dest);
+          uCost.printFinalPathInfo();
+        break;
 
         default:
           break;

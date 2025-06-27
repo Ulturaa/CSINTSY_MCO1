@@ -18,8 +18,7 @@ public class Graph {
   ReadFile rf;
   // Map implmentation from https://www.baeldung.com/java-graphs
   private Map<Integer, ArrayList<Edge>> adjVertices;
-  // Map<Integer, ArrayList<Node>> adjNodes;
-  Map<String, Integer> nameToUid;
+  public Map<String, Integer> nameToUid;
   Map<Integer, Node> UidToNode;
 
   /**
@@ -64,15 +63,6 @@ public class Graph {
   } 
 
   public void printAllNodes() {
-    // for (Node node : nodes) {
-    //   System.out.println(node.getName() + ": " + node.getUid() + " = " + node.getVal() + "\n");
-    // }
-    // for (List<String> row : rf.records) {
-    //   for (String string : row) {
-    //     System.out.print(string + " ");
-    //   }
-    //   System.out.println("\n");
-    // }
     Iterator<Map.Entry<Integer, ArrayList<Edge>>> it = adjVertices.entrySet().iterator();
     while (it.hasNext()) {
       Integer key = it.next().getKey();
@@ -88,7 +78,7 @@ public class Graph {
       ArrayList<Edge> edges = entry.getValue();
       System.out.print(UidToNode.get(key).getName() + "-> "); 
       for (Edge edge : edges) {
-        System.out.print(UidToNode.get(edge.dest).getName() + "[" + edge.weight + "] ");
+        System.out.print(UidToNode.get(edge.destUid).getName() + "[" + edge.weight + "] ");
       }
       System.out.println();
     }
@@ -124,13 +114,9 @@ public class Graph {
   public void removeNodeConnections(int uid) {
     ArrayList<Edge> connections = adjVertices.get(uid);
     for (Edge edge : connections) {
-      adjVertices.get(edge.dest).removeIf(e -> e.dest == uid);
+      adjVertices.get(edge.destUid).removeIf(e -> e.destUid == uid);
     }
   }
-
-  // public Map<Integer, ArrayList<Edge>> getadjVertices() {
-  //   return adjVertices;
-  // }
 
   public ArrayList<Edge> getNodeEdges(int nodeUid) {
     return adjVertices.get(nodeUid);
@@ -142,6 +128,10 @@ public class Graph {
 
   public Map<Integer, Node> getUidToNode() {
     return UidToNode;
+  }
+
+  public String getUidToName(int uid) {
+    return UidToNode.get(uid).getName();
   }
 
 }

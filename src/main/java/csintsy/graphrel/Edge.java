@@ -4,16 +4,16 @@ package csintsy.graphrel;
  * Edge
  */
 public class Edge {
-  int dest;
+  int destUid;
   int weight;
 
-  public Edge(int dest, int weight) {
-    this.dest = dest;
+  public Edge(int destUid, int weight) {
+    this.destUid = destUid;
     this.weight = weight;
   }
 
-  public int getDest() {
-    return this.dest;
+  public int getdestUid() {
+    return this.destUid;
   }
 
   public int getWeight() {

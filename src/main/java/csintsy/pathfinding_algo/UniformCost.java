@@ -1,93 +1,126 @@
 package csintsy.pathfinding_algo;
 
-import java.util.*;
 import java.util.ArrayList;
-//import java.util.Iterator;
+import java.util.HashSet;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
 
 import csintsy.graphrel.Edge;
 import csintsy.graphrel.Graph;
-import csintsy.graphrel.Node;
 
 /**
- * UniformCost
+ * UniformCost Search Implementation 
  */
 public class UniformCost {
-  Graph g; // graph
-  PriorityQueue<Integer> nodeUids; //pq
-  Set<Integer> visited; //visited list
-  ArrayList<Edge> path; //path cost
-  int numOfNodes; //total num of nodes
-  int fromUid; //source
-  int toUid; //destination
+  Graph g;
+  PriorityQueue<Path> PQpaths;
+  Set<Integer> visited;
+  ArrayList<Edge> path;
+  Path finalPath;
+  int numOfNodes;
+  int fromUid;
+  int toUid;
 
   public UniformCost(Graph g) {
-    this.g = g;
     this.numOfNodes = g.getNumberOfNodes();
+    this.PQpaths = new PriorityQueue<Path>(g.getNumberOfNodes(), new PathComparator());
+    this.g = g;
   }
 
-  
+  void dumpPQElem() {
+    System.out.println("PQ Elements: " + PQpaths.size());
+    if (!PQpaths.isEmpty()) {
+      System.out.println("Head-Cost:" + PQpaths.peek().cost);
+      System.out.println("Head: " + g.getUidToName(PQpaths.peek().getCurrentNodeUid()));
+    } else {
+      System.out.println("PQpaths is empty");
+    }
+
+    for (Path pth : PQpaths) {
+      System.out.println("Path cost: " + pth.cost);
+    }
+  }
+
+  public void dumpVisited() {
+    System.out.println();
+    System.out.print("Visited: ");
+    if (visited != null) {
+      for (Integer uid : visited) {
+        System.out.print(g.getUidToName(uid) + " ");
+      }
+    }
+    System.out.println();
+  }
+
+  public void printFinalPathInfo() {
+    List<Integer> pathSeq = finalPath.getNodeSequence();
+
+    System.out.println("Path: ");
+    int e = pathSeq.get(pathSeq.size() - 1);
+    for (Integer uid : pathSeq) {
+      String name = g.getUidToName(uid);
+      if (e == uid) {
+        System.out.print(name);
+      } else {
+        System.out.print(name + " -> ");
+      }
+    }
+    System.out.println();
+    System.out.println("Total Cost: " + finalPath.getCost());
+  }
+
   public void calcPath(int fromUid, int toUid) {
-    
-    // this.fromUid = fromUid;
-    // this.toUid = toUid;
+    this.fromUid = fromUid;
+    this.toUid = toUid;
 
-    PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> {if (a[1] != b[1]) return Integer.compare(a[1], b[1]); return Integer.compare(a[0], b[0]);});//inside is uid, cost
-    //sorted alphabetically and cost wise | it will return the int[] with lowest cost, if same, chooses lower uid which is smaller alphabet
-    Set<Integer> visited = new HashSet<>();
-    Map<Integer, Integer> parentMap = new HashMap<>(); //key = current uid, value = parent node uid
-    Map<Integer, Integer> costingMap = new HashMap<>(); //key = uid, value = total cost
-    
-    
-    //addUidsToPQ(); //insert all nodes to queue
-    
-    pq.add(new int[]{fromUid, 0}); 
-    costingMap.put(fromUid, 0); //no cost to reach start node
-    parentMap.put(fromUid, -1); //start has no parent
+    // Clear and initialize data structures
+    PQpaths.clear();
+    visited = new HashSet<Integer>();
 
-    while (!pq.isEmpty()){ //while there are nodes it keeps looping
-      int[] current = pq.poll(); //removes the node with lowest cost
-      int currentUid = current[0]; //uid of current id
-      int currentCost = current[1]; //total cost 
+    // Start with initial path containing only the source node
+    Path initialPath = new Path(fromUid);
+    PQpaths.add(initialPath);
 
-      if (visited.contains(currentUid)) { //checks the current node thats visited and skips if it is
+    while (!PQpaths.isEmpty()) {
+
+      Path currentPath = PQpaths.poll();
+      int currentNodeUid = currentPath.getCurrentNodeUid();
+
+      // Check if goal is reached
+      if (currentNodeUid == toUid) {
+        this.finalPath = currentPath;
+        return;
+      }
+
+      if (visited.contains(currentNodeUid)) {
         continue;
       }
 
-      visited.add(currentUid); //adds the current node to visited list
-    
-      if (currentUid == toUid) { //found goal
-        break; //return the path and cost
-      }
+      visited.add(currentNodeUid);
 
-      Node node = g.getUidToNode().get(currentUid); //get node object from the graph
-      if (node == null) continue; //skip if doesnt exist
+      // Get edges from current node
+      ArrayList<Edge> nodeEdges = g.getNodeEdges(currentNodeUid);
 
-      //main loop to check all cost of the same level
-      for(Edge e : g.getNodeEdges(toUid)){
-        int neighbor = e.getDest(); //get neighbor node
-        int cost = e.getWeight() + currentCost; //
+      // Explore all neighbors
+      if (nodeEdges != null) {
+        for (Edge edge : nodeEdges) {
+          int neighborUid = edge.getdestUid();
 
-        if(!costingMap.containsKey(neighbor) || cost < costingMap.get(neighbor)){ //if cost < curr node cost / node dne
-          costingMap.put(neighbor, cost);
-          parentMap.put(neighbor, currentUid);
-          pq.add(new int[]{neighbor, cost});
+          if (!visited.contains(neighborUid)) {
+            // Create new path by extending current path
+            Path newPath = currentPath.clone().addEdge(edge);
+            PQpaths.add(newPath);
+
+          }                
         }
-      }
-
-      //to get actual path
-      List<Integer> pathing = new ArrayList<>(); //makes a path going back from destination to start (gonna use parent map)
-      Integer cur = toUid; // starting from the current
-      while(cur != -1){ //while cur is not -1
-        pathing.add(cur); //adds the current node to pathing list
-        cur = parentMap.get(cur); //gets the parent node
-      }
+      }             
     }
 
-  // private void addUidsToPQ() {
-  //    nodeUids.addAll(this.g.getUidToNode().keySet());
-  // }
-
+    // No path found
+    System.out.println("No path found from " + g.getUidToName(fromUid) + 
+        " to " + g.getUidToName(toUid));
+    finalPath = null;
+    return;
   }
 }
