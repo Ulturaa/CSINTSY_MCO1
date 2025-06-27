@@ -9,8 +9,11 @@ public class Node {
   private static int idCounter = 0;
   private int uid; 
   private String name;
+<<<<<<< HEAD
+=======
   private int x, y; // for heuristic (optional)
 
+>>>>>>> origin/astarwawo
 
   /**
    * Class Constructor
@@ -41,10 +44,16 @@ public class Node {
     return this.name;
   }
 
+<<<<<<< HEAD
+  // possibly for Heuristics?
+=======
+>>>>>>> origin/astarwawo
   public int getVal() {
     return this.val;
   }
 
+<<<<<<< HEAD
+=======
   // A STAR
 public int getX() {
     return x;
@@ -57,5 +66,6 @@ public int getY() {
 public void setVal(int val) {
     this.val = val;
 }
+>>>>>>> origin/astarwawo
 
 }

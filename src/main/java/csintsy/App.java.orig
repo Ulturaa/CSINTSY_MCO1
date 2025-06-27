@@ -5,30 +5,48 @@ import csintsy.graphrel.Edge;
 import csintsy.graphrel.Graph;
 import csintsy.pathfinding_algo.Path;
 import csintsy.pathfinding_algo.UniformCost;
+
+import java.util.Scanner;
+
+/**
+ * main
+ */
+=======
+import csintsy.graphrel.Graph;
+import csintsy.graphrel.Node;
 import csintsy.pathfinding_algo.AStar;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * main
- */
+>>>>>>> origin/astarwawo
 public class App {
   public static void main(String[] args) {
 
     Graph currGraph = new Graph();
+<<<<<<< HEAD
+    // currGraph.addNode(new Node("A", 100));
+    // currGraph.addNode(new Node("B", 200));
+
+    Scanner myObj = new Scanner(System.in);
+
+    while (true) {
+      
+      System.out.println("Graph Test: ");
+=======
     Scanner myObj = new Scanner(System.in);
 
     while (true) {
       System.out.println("Graph Test:");
+>>>>>>> origin/astarwawo
       System.out.println("1. Print All Nodes");
       System.out.println("2. Print Node and Edges");
       System.out.println("3. Add Node");
       System.out.println("4. Remove Node");
       System.out.println("5. Exit");
-      System.out.println("6. Run UCS Algorithm");
-      System.out.println("7. Run A* Algorithm");
+<<<<<<< HEAD
+      System.out.println("6. Compute UCS");
       char cIn = myObj.next().charAt(0);
       switch (cIn) {
         case '1':
@@ -36,14 +54,31 @@ public class App {
          currGraph.printAllNodes(); 
           System.out.println();
           break;
+=======
+      System.out.println("6. Run A* Algorithm");
+      char cIn = myObj.next().charAt(0);
+
+      switch (cIn) {
+        case '1':
+          System.out.println();
+          currGraph.printAllNodes();
+          System.out.println();
+          break;
+
+>>>>>>> origin/astarwawo
         case '2':
           System.out.println();
           currGraph.printNodeEdges();
           System.out.println();
           break;
+<<<<<<< HEAD
+        case '3':
+=======
+
         case '3':
           boolean returnToMain = false;
 
+>>>>>>> origin/astarwawo
           // too tedious to implement but it should be easy
           // a lot of menuing to ask for the user 
           // + Node Name
@@ -51,6 +86,9 @@ public class App {
           // + Edge weight
           // possibly just create another menu to modify connections of a node
           // by printing all node and their edges connection
+<<<<<<< HEAD
+          break;
+=======
 
         // THIS FOR TESTING
 
@@ -113,15 +151,16 @@ public class App {
             break;
   
 
+>>>>>>> origin/astarwawo
         case '4':
           System.out.println("Enter Node Name String: ");
           String nodeName = myObj.next();
           currGraph.removeNodeByName(nodeName);
           break;
-
-        case '5':
-          myObj.close();
+<<<<<<< HEAD
+        case'5':
           System.exit(0);
+          myObj.close();
           break;
         case'6':
           UniformCost uCost = new UniformCost(currGraph);
@@ -133,7 +172,15 @@ public class App {
           uCost.printFinalPathInfo();
         break;
 
-        case '7':
+        default:
+=======
+
+        case '5':
+          myObj.close();
+          System.exit(0);
+          break;
+
+        case '6':
           System.out.println("Enter START node name:");
           String fromName = myObj.next();
           System.out.println("Enter GOAL node name:");
@@ -164,6 +211,7 @@ public class App {
 
         default:
           System.out.println("Invalid option. Try again.");
+>>>>>>> origin/astarwawo
           break;
       }
       System.out.println();
