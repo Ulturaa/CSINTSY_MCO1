@@ -1,2 +1,5 @@
 *.class
 *.bak
+*.orig
+
+/target
