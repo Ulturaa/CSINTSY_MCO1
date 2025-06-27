@@ -8,6 +8,7 @@ import csintsy.graphrel.Node;
 
 public class AStar {
     private Graph graph;
+    // private 
 
     public AStar(Graph g) {
         this.graph = g;
@@ -33,7 +34,7 @@ public class AStar {
             closedSet.add(current.uid);
 
             for (Edge edge : graph.getNodeEdges(current.uid)) {
-                int neighborUid = edge.getDest();
+                int neighborUid = edge.getdestUid();
                 if (closedSet.contains(neighborUid)) continue;
 
                 double tentativeG = current.gCost + edge.getWeight();

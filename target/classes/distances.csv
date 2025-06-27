@@ -1,6 +1,7 @@
 # Distances based on Line of Sight
 # Value or Heuristic are set within the node
-# Heuristic to be added to another column
+# Heuristic can be added by creating another csv
+# with Node, Heuristic_Val columns
 Destination A,Destination B,Distance (m)
 University Mall,McDonald's,37
 Sherwood,Jollibee,57

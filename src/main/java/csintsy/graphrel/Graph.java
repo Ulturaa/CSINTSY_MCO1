@@ -126,6 +126,10 @@ public void printNodeEdges() {
   }
 }
 
+public String getUidToName(int uid) {
+  return UidToNode.get(uid).getName();
+}
+
 
   public void addNode(Node n) {
     nameToUid.putIfAbsent(n.getName(), n.getUid());
