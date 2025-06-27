@@ -39,6 +39,21 @@ public class appcontroller {
         this.av.mapBtnActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                /*
+                    --- Calling/running of algorithms should be done here ---
+                    
+                    1. Prompt user for Start and Goal nodes.
+                        - Do proper error handling blah blah
+                    2. If
+                        2a. Path is empty
+                            - JOptionPane displaying "No path found from Node A to Node B"
+                            or
+                            - Display "No path was found inside the results pane(?)"
+                        2b. Path found
+                            - Update the ResultsPane with the results of the algorithms (easy enough right?)
+                */
+
                 runAlgorithms();
             }
         });
@@ -46,6 +61,29 @@ public class appcontroller {
         this.av.addBtnActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                /*  Im too lazy to implement this shit
+
+                1. Option Pane pops up and requests for the name of node (ie ID; char value)
+                2. Verify that there are no duplicate IDs and that it is a valid character (A-Z only caps ig?)
+                    2a. If there is an error, error pane pops up with the error (duplicate or invalid name). Closes error pane and new option pane displayed
+                    2b. If no error, proceed
+                3. Prompt user for the heuristic value. Verify if valid value (positive integer)
+                    3a. If not proper value (negative, float, charater, etc.) then post error and re-prompt user
+                4. Prompt user for new option
+                    - A | Connect this node to another
+                    - B | Add another node
+                    - C | return to menu
+                
+                    4a. Connect to another node
+                        - Prompt user for another node and its edge weight. Verify if it exists, else prompt error for input. Verify if valid weight (number).
+                        - Update(add) edge for both edges
+                        - Prompt success!
+                    4b. Add another node
+                        - Repeat from step 1.
+                    4C. Return to menu
+                        - Exit JOptionPane (return is not 0 or 1);
+                */
+
                 System.out.println("Added Record - Change later!");
             }
         });

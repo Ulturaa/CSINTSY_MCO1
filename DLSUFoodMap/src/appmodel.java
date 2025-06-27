@@ -2,6 +2,13 @@ import java.util.*;
 
 class appmodel {
 
+    /*
+        Data should be stored/manipulated(woah) here
+        But file reading can be done in the driver for ease and easier error handling.
+        To sick to implement right now
+    */
+
+
     public List<Character> bfs(Graph graph, char start, char goal) {
         Queue<List<Character>> queue = new LinkedList<>();
         Set<Character> visited = new HashSet<>();
