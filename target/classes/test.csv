@@ -2,9 +2,20 @@
 # Might add another column for Heuristics
 # Heuristic can be just the direct distance between Node A and Node B
 Node A,Node B,Edge_val
- A,B,2,7
- A,E,3,7
- B,C,1,6
- B,G,9,6
- E,D,6,4
- D,G,1,1
+S,A,4,7
+S,B,10,7
+A,B,8,8
+A,D,5,8
+B,D,15,6
+C,D,8,5
+C,E,20,5
+C,F,2,5
+D,H,16,5
+D,I,20,5
+D,F,1,5
+F,G,13,3
+
+G,G,0,0
+H,H,0,7
+I,I,0,4
+E,E,0,3
