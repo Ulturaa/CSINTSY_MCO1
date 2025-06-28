@@ -1,12 +1,54 @@
 # Distances based on Line of Sight
 # Value or Heuristic are set within the node
 # Heuristic can be added by creating another csv
+# Filename for heuristic and node should be the same
+# as this just add _h at the end.
+# <FILENAME>_h.csv
 # with Node, Heuristic_Val columns
+# for I,J since there are two J's in DLSU Food Map
+# just pick the one at Br Andrew Gonzalez
 Destination A,Destination B,Distance (m)
-University Mall,McDonald's,37
-Sherwood,Jollibee,57
-Sherwood,Green Mall,95
-Sherwood,Perico's,72
-Sherwood,One Archer's,124
-Sherwood,Dagonoy St.,202
-Jollibee,Dagonoy St.,150
+A,B,40
+A,T,115
+A,R,120
+B,C,62
+B,R,98
+C,R,85
+C,D,205
+D,E,84
+D,F,89
+E,F,28
+E,H,81
+F,H,67
+G,H,74
+G,I,41
+H,L,64
+H,I,70
+I,L,57
+I,J,34
+I,K,73
+I,U,117
+J,K,41
+J,U,89
+K,L,81
+K,M,80
+K,N,98
+M,N,56
+M,J,89
+M,I,105
+N,J,68
+N,I,67
+N,G,74
+N,O,151
+O,G,124
+O,F,103
+O,E,94
+O,P,81
+O,S,75
+P,Q,71
+P,S,43
+P,S,36
+Q,R,67
+Q,S,106
+R,T,243
+R,Q,40
