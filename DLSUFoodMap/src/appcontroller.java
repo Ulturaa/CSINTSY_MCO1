@@ -89,6 +89,7 @@ public class appcontroller {
                         - Exit JOptionPane (return is not 0 or 1);
                 */
 
+                String[] prompts = {"Connect this node to another", "Add another node", "Return to menu"};
                 boolean valid = false;
                 boolean dupes = false;
                 int formVal = 0;                                                  // Return value of the Option Panes
@@ -110,20 +111,6 @@ public class appcontroller {
                     formVal = JOptionPane.showConfirmDialog(null, newNode, "Enter Node details", JOptionPane.OK_CANCEL_OPTION);
 
                     if(formVal == 0) {
-                        /*
-                        
-                        // Check if empty
-                        if(name.getText().trim().isEmpty()){
-                            if(hVal.getText().trim().isEmpty())
-                                JOptionPane.showMessageDialog(null, "ERROR: Both fields are empty", "Error", JOptionPane.ERROR_MESSAGE);
-                                else
-                                    JOptionPane.showMessageDialog(null, "ERROR: Please input a name", "Error", JOptionPane.ERROR_MESSAGE);    
-                        }else if(hVal.getText().trim().isEmpty()){
-                            JOptionPane.showMessageDialog(null, "ERROR: Please input a value", "Error", JOptionPane.ERROR_MESSAGE); 
-                        }
-                        
-                        */
-
                         // Check for invalid inputs
                         if(name.getText().trim().length() == 1 && name.getText().trim().matches("[A-Z]{1}")){
                             System.out.println("Valid character input!");
@@ -142,16 +129,30 @@ public class appcontroller {
                                 // Check for hVal
                                 // Check if if integer input
                                 if(hVal.getText().matches("\\d+")) {
-                                    JOptionPane.showMessageDialog(null, "OKAY", "Error", JOptionPane.ERROR_MESSAGE);
+                                    /*
+                                     * Code to add to list goes here
+                                     */
+                                    JOptionPane.showMessageDialog(null, "Success! Added Node " + name.getText(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
+
+                                    switch (JOptionPane.showOptionDialog(null, "What would you like to do next?", "Next Action", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, prompts, prompts[0])) {
+                                        case 0:
+                                            // Connect to another node
+                                            break;
+                                        case 1:
+                                            // Return to the start of the operation, data was already saved.
+                                            valid = true;
+                                            formVal = 0;
+                                            break;
+                                        default: 
+                                            // Third option and exit on top right || Close the form
+                                            valid = true;
+                                            formVal = 1;
+                                    }
+
                                 } else {
-                                    JOptionPane.showMessageDialog(null, "NOT OKAY", "Error", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "ERROR: Please enter a positive integer", "ERROR", JOptionPane.ERROR_MESSAGE);
                                 }
                             }
-                                
-                                    
-
-
-
                         } else {
                             JOptionPane.showMessageDialog(null, "ERROR: Please input a character A-Z (Upper case only)", "Error", JOptionPane.ERROR_MESSAGE);
                         }

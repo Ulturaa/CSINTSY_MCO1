@@ -33,7 +33,7 @@ public class appview extends JFrame{
 
         this.nodes = nodes;
 
-        ImageIcon ico = new ImageIcon("images/test.jpg");
+        ImageIcon ico = new ImageIcon("images/Icon.png");
         this.setIconImage(ico.getImage());
         // Create the Frame
         this.setTitle("DLSU Food Map");
