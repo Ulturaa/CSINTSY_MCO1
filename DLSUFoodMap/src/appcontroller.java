@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
+import javax.print.attribute.standard.Destination;
 import javax.swing.Box;
 
 public class appcontroller {
@@ -59,7 +60,61 @@ public class appcontroller {
                             - Update the ResultsPane with the results of the algorithms (easy enough right?)
                 */
 
-                runAlgorithms();
+                // For reference: From = Start | To = Goal    
+                Boolean foundTo, foundFrom;
+                Boolean end = false;
+                int val = 0;
+                JTextField fromNode, toNode;
+                JPanel mapP = new JPanel();
+                mapP.add(new JLabel("Starting node: "));
+                mapP.add(fromNode = new JTextField(3)); 
+                mapP.add(new JLabel("Destination node:"));
+                mapP.add(toNode = new JTextField(3));
+
+                do{
+                    toNode.setText("");
+                    fromNode.setText("");
+                    foundTo = false;
+                    foundFrom = false;
+
+                    val = JOptionPane.showConfirmDialog(null, mapP, "Enter Node details", JOptionPane.OK_CANCEL_OPTION);
+                    if(val == 0) {
+                        // Check for invalid inputs
+                        if((fromNode.getText().trim().length() == 1 && fromNode.getText().trim().matches("[A-Z]{1}")) && (toNode.getText().trim().length() == 1 && toNode.getText().trim().matches("[A-Z]{1}"))){   // Use regex to verify
+                                // Check if nodes exist
+                            for(int i=0; i<nodes.length; i++){
+                                if(toNode.getText().trim().charAt(0) == nodes[i].getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                    foundTo = true;
+                                    i = nodes.length; // Force end the loop
+                                }
+                            }
+                            for(int i=0; i<nodes.length; i++){
+                                if(fromNode.getText().trim().charAt(0) == nodes[i].getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                    foundFrom = true;
+                                    i = nodes.length; // Force end the loop
+                                }
+                            }
+
+                            if(foundFrom == true){
+                                if(foundTo == true){
+                                    runAlgorithms(); // Run the algorithm here
+                                    JOptionPane.showMessageDialog(null, "Route has been mapped!", "Success", JOptionPane.PLAIN_MESSAGE);
+                                    val = 1;
+                                    end = true;
+                                } else
+                                    JOptionPane.showMessageDialog(null, "ERROR: Node " + toNode.getText().trim() + " not found", "Error", JOptionPane.ERROR_MESSAGE);
+                            }else 
+                                JOptionPane.showMessageDialog(null, "ERROR: Node " + fromNode.getText().trim() + " not found", "Error", JOptionPane.ERROR_MESSAGE);
+                            
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "ERROR: Please input a character A-Z (Upper case only)", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        end = true;
+                    }
+                    
+                } while(end == false || val == 0);
             }
         });
 
@@ -88,36 +143,34 @@ public class appcontroller {
                     4C. Return to menu
                         - Exit JOptionPane (return is not 0 or 1);
                 */
-
                 String[] prompts = {"Connect this node to another", "Add another node", "Return to menu"};
-                boolean valid = false;
-                boolean dupes = false;
+                boolean valid, dupes;
                 int formVal = 0;                                                  // Return value of the Option Panes
                 JTextField name, hVal, prompt, toNode, weight;
-                JPanel newNode, promptP;
+                JPanel newNode, connectNode;
 
                 newNode = new JPanel();
                 newNode.add(new JLabel("Node name: "));
                 newNode.add(name = new JTextField(5));
-                newNode.add(Box.createHorizontalStrut(15));             // spacer
+                newNode.add(Box.createHorizontalStrut(15));                 // spacer
                 newNode.add(new JLabel("Heuristic Value: "));
                 newNode.add(hVal = new JTextField(5));
 
                 
                 do{
                     name.setText("");   // Clear text field
-                    hVal.setText("");    
+                    hVal.setText("");
+                    valid = false;
+                    dupes = false;
                     
                     formVal = JOptionPane.showConfirmDialog(null, newNode, "Enter Node details", JOptionPane.OK_CANCEL_OPTION);
 
                     if(formVal == 0) {
                         // Check for invalid inputs
-                        if(name.getText().trim().length() == 1 && name.getText().trim().matches("[A-Z]{1}")){
-                            System.out.println("Valid character input!");
+                        if(name.getText().trim().length() == 1 && name.getText().trim().matches("[A-Z]{1}")){   // Use regex to verify
                             
                             // Check if duplicate
                             for(int i=0; i<nodes.length; i++){
-                                System.out.println("Node["+i+"] = " + nodes[i].getID() + " == " + name.getText().trim().charAt(0));     // For checking
                                 if(name.getText().trim().charAt(0) == nodes[i].getID()){                                                // Convert to char and compare with ID. *** Change this later to work with nodes ***
                                     JOptionPane.showMessageDialog(null, "ERROR: Name already exists", "Error", JOptionPane.ERROR_MESSAGE);
                                     dupes = true;
