@@ -1,7 +1,12 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.Box;
 
 public class appcontroller {
 
@@ -84,7 +89,84 @@ public class appcontroller {
                         - Exit JOptionPane (return is not 0 or 1);
                 */
 
-                System.out.println("Added Record - Change later!");
+                boolean valid = false;
+                boolean dupes = false;
+                int formVal = 0;                                                  // Return value of the Option Panes
+                JTextField name, hVal, prompt, toNode, weight;
+                JPanel newNode, promptP;
+
+                newNode = new JPanel();
+                newNode.add(new JLabel("Node name: "));
+                newNode.add(name = new JTextField(5));
+                newNode.add(Box.createHorizontalStrut(15));             // spacer
+                newNode.add(new JLabel("Heuristic Value: "));
+                newNode.add(hVal = new JTextField(5));
+
+                
+                do{
+                    name.setText("");   // Clear text field
+                    hVal.setText("");    
+                    
+                    formVal = JOptionPane.showConfirmDialog(null, newNode, "Enter Node details", JOptionPane.OK_CANCEL_OPTION);
+
+                    if(formVal == 0) {
+                        /*
+                        
+                        // Check if empty
+                        if(name.getText().trim().isEmpty()){
+                            if(hVal.getText().trim().isEmpty())
+                                JOptionPane.showMessageDialog(null, "ERROR: Both fields are empty", "Error", JOptionPane.ERROR_MESSAGE);
+                                else
+                                    JOptionPane.showMessageDialog(null, "ERROR: Please input a name", "Error", JOptionPane.ERROR_MESSAGE);    
+                        }else if(hVal.getText().trim().isEmpty()){
+                            JOptionPane.showMessageDialog(null, "ERROR: Please input a value", "Error", JOptionPane.ERROR_MESSAGE); 
+                        }
+                        
+                        */
+
+                        // Check for invalid inputs
+                        if(name.getText().trim().length() == 1 && name.getText().trim().matches("[A-Z]{1}")){
+                            System.out.println("Valid character input!");
+                            
+                            // Check if duplicate
+                            for(int i=0; i<nodes.length; i++){
+                                System.out.println("Node["+i+"] = " + nodes[i].getID() + " == " + name.getText().trim().charAt(0));     // For checking
+                                if(name.getText().trim().charAt(0) == nodes[i].getID()){                                                // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                    JOptionPane.showMessageDialog(null, "ERROR: Name already exists", "Error", JOptionPane.ERROR_MESSAGE);
+                                    dupes = true;
+                                    i = nodes.length; // Force end the loop
+                                }
+                            }
+
+                            if(dupes == false){
+                                // Check for hVal
+                                // Check if if integer input
+                                if(hVal.getText().matches("\\d+")) {
+                                    JOptionPane.showMessageDialog(null, "OKAY", "Error", JOptionPane.ERROR_MESSAGE);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "NOT OKAY", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+                                
+                                    
+
+
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "ERROR: Please input a character A-Z (Upper case only)", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                        
+                    } else {
+                        // Check if Valid 
+                        if(name.getText().trim().isEmpty() && hVal.getText().trim().isEmpty()) {
+                            valid = true;
+                            formVal = 1;
+                        }
+                    }
+
+                    
+                }while(valid == false || formVal == 0);
             }
         });
 
