@@ -20,7 +20,7 @@ import java.util.List;
 public class appview extends JFrame{
 
     private JPanel mapPanel, boxPanel, resultsPanel;
-    private JButton rstBtn, clrBtn, mapBtn, addBtn, delBtn;
+    private JButton rstBtn, clrBtn, mapBtn, addBtn, delBtn, addEdgeBtn;
     private JCheckBox[] cBox;
     private JLabel map;
     private ResultsPane rA, rB;
@@ -49,7 +49,7 @@ public class appview extends JFrame{
         mapPanel.setBackground(Color.CYAN);
         mapPanel.setBounds(15, 15, 756, 423);
         
-        Image img = new ImageIcon("images/map.png").getImage();                                 // This is the map image
+        Image img = new ImageIcon("images/map.png").getImage();                                     // This is the map image
         map = new JLabel(new ImageIcon(img.getScaledInstance(756, 423, Image.SCALE_SMOOTH)));   // Scale down the map to fit within the panel
         map.setBounds(0, 0, 756, 423);
         mapPanel.add(map);
@@ -99,6 +99,11 @@ public class appview extends JFrame{
         delBtn.setFocusable(false);
         delBtn.setBounds(720, 503, 75, 30);
 
+        addEdgeBtn = new JButton("Add Edge");
+        addEdgeBtn.setForeground(Color.BLACK);
+        addEdgeBtn.setFocusable(false);
+        addEdgeBtn.setBounds(630, 553, 90, 30);
+
         rA = new ResultsPane("Blind Search");
         rA.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); // added boarder to look like padding
         rB = new ResultsPane("Heuristic Search");
@@ -114,6 +119,7 @@ public class appview extends JFrame{
         this.add(mapBtn);
         this.add(addBtn);
         this.add(delBtn);
+        this.add(addEdgeBtn);
         this.setVisible(true);
     }
 
@@ -158,6 +164,10 @@ public class appview extends JFrame{
 
     public void delBtnActionListener(ActionListener actionListener) {
 		this.delBtn.addActionListener(actionListener);
+	}
+
+    public void addEdgeBtnActionListener(ActionListener actionListener) {
+		this.addEdgeBtn.addActionListener(actionListener);
 	}
 
     // hardcoded values for now

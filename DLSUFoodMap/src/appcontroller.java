@@ -67,7 +67,8 @@ public class appcontroller {
                 JTextField fromNode, toNode;
                 JPanel mapP = new JPanel();
                 mapP.add(new JLabel("Starting node: "));
-                mapP.add(fromNode = new JTextField(3)); 
+                mapP.add(fromNode = new JTextField(3));
+                mapP.add(Box.createHorizontalStrut(15));                 // spacer
                 mapP.add(new JLabel("Destination node:"));
                 mapP.add(toNode = new JTextField(3));
 
@@ -105,8 +106,6 @@ public class appcontroller {
                                     JOptionPane.showMessageDialog(null, "ERROR: Node " + toNode.getText().trim() + " not found", "Error", JOptionPane.ERROR_MESSAGE);
                             }else 
                                 JOptionPane.showMessageDialog(null, "ERROR: Node " + fromNode.getText().trim() + " not found", "Error", JOptionPane.ERROR_MESSAGE);
-                            
-
                         } else {
                             JOptionPane.showMessageDialog(null, "ERROR: Please input a character A-Z (Upper case only)", "Error", JOptionPane.ERROR_MESSAGE);
                         }
@@ -129,32 +128,26 @@ public class appcontroller {
                     2b. If no error, proceed
                 3. Prompt user for the heuristic value. Verify if valid value (positive integer)
                     3a. If not proper value (negative, float, charater, etc.) then post error and re-prompt user
-                4. Prompt user for new option
-                    - A | Connect this node to another
-                    - B | Add another node
-                    - C | return to menu
-                
-                    4a. Connect to another node
-                        - Prompt user for another node and its edge weight. Verify if it exists, else prompt error for input. Verify if valid weight (number).
-                        - Update(add) edge for both edges
-                        - Prompt success!
-                    4b. Add another node
-                        - Repeat from step 1.
-                    4C. Return to menu
-                        - Exit JOptionPane (return is not 0 or 1);
                 */
                 String[] prompts = {"Connect this node to another", "Add another node", "Return to menu"};
                 boolean valid, dupes;
-                int formVal = 0;                                                  // Return value of the Option Panes
+                int formVal, nextVal;                                                  // Return value of the Option Panes
                 JTextField name, hVal, prompt, toNode, weight;
                 JPanel newNode, connectNode;
 
                 newNode = new JPanel();
                 newNode.add(new JLabel("Node name: "));
-                newNode.add(name = new JTextField(5));
+                newNode.add(name = new JTextField(3));
                 newNode.add(Box.createHorizontalStrut(15));                 // spacer
                 newNode.add(new JLabel("Heuristic Value: "));
-                newNode.add(hVal = new JTextField(5));
+                newNode.add(hVal = new JTextField(3));
+
+                connectNode = new JPanel();
+                connectNode.add(new JLabel("Destination node: "));
+                connectNode.add(toNode = new JTextField(3));
+                connectNode.add(Box.createHorizontalStrut(15));                 // spacer
+                connectNode.add(new JLabel("Weight: "));
+                connectNode.add(weight = new JTextField(3));
 
                 
                 do{
@@ -186,21 +179,8 @@ public class appcontroller {
                                      * Code to add to list goes here
                                      */
                                     JOptionPane.showMessageDialog(null, "Success! Added Node " + name.getText(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
-
-                                    switch (JOptionPane.showOptionDialog(null, "What would you like to do next?", "Next Action", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, prompts, prompts[0])) {
-                                        case 0:
-                                            // Connect to another node
-                                            break;
-                                        case 1:
-                                            // Return to the start of the operation, data was already saved.
-                                            valid = true;
-                                            formVal = 0;
-                                            break;
-                                        default: 
-                                            // Third option and exit on top right || Close the form
-                                            valid = true;
-                                            formVal = 1;
-                                    }
+                                    valid = true;
+                                    formVal = 1;
 
                                 } else {
                                     JOptionPane.showMessageDialog(null, "ERROR: Please enter a positive integer", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -212,11 +192,9 @@ public class appcontroller {
 
                         
                     } else {
-                        // Check if Valid 
-                        if(name.getText().trim().isEmpty() && hVal.getText().trim().isEmpty()) {
-                            valid = true;
-                            formVal = 1;
-                        }
+                        // Exit
+                        valid = true;
+                        formVal = 1;
                     }
 
                     
@@ -236,6 +214,74 @@ public class appcontroller {
                 if((op != null) && (op.length() > 0)){  // Print if confirmed
                     System.out.println("Option dialogue: " + op);
                 }
+            }
+        });
+
+        this.av.addEdgeBtnActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*
+                // Set up for next window (Prompt for adding edges, adding another node, or exit)
+                                    do{
+
+                                        nextVal = JOptionPane.showOptionDialog(null, "What would you like to do next?", "Next Action", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, prompts, prompts[0]);
+                                        
+                                        switch (nextVal) {
+                                            case 0:
+                                                toNode.setText("");
+                                                weight.setText("");
+                                                valid = false;
+                                                
+
+                                                // Connect to another node
+
+                                                do{
+                                                    toNode.setText("");
+                                                    weight.setText("");
+                                                    if(JOptionPane.showConfirmDialog(null, connectNode, "Enter Node details", JOptionPane.OK_CANCEL_OPTION) == 0){
+                                                        // if selected, then check for data type
+
+                                                        if(toNode.getText().trim().length() == 1 && toNode.getText().trim().matches("[A-Z]{1}")){
+                                                            // check if Existing input
+                                                            for(int i=0; i<nodes.length; i++){
+                                                                if(toNode.getText().trim().charAt(0) == nodes[i].getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                                                    dupes = true;
+                                                                    i = nodes.length; // Force end the loop
+                                                                }
+                                                            }
+
+                                                            if(dupes == true) {
+                                                                if(weight.getText().matches("\\d+")) {
+                                                                    JOptionPane.showMessageDialog(null, "Good Job", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                                                    
+                                                                } else {
+                                                                    JOptionPane.showMessageDialog(null, "ERROR: Please enter a positive integer", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                                                }
+                                                            } else {
+                                                                JOptionPane.showMessageDialog(null, "ERROR: Node " + toNode.getText().trim() + " not found", "Error", JOptionPane.ERROR_MESSAGE);
+                                                            }
+                                                        } else {
+                                                            JOptionPane.showMessageDialog(null, "ERROR: Please input a character A-Z (Upper case only)", "Error", JOptionPane.ERROR_MESSAGE);
+                                                        }
+                                                        
+                                                    }
+                                                }while(valid == false);
+
+                                                break;
+                                            case 1:
+                                                // Return to the start of the operation, data was already saved.
+                                                valid = true;
+                                                formVal = 0;
+                                                nextVal = 1;
+                                                break;
+                                            default: 
+                                                // Third option and exit on top right || Close the form
+                                                valid = true;
+                                                formVal = 1;
+                                                nextVal = 1;
+                                        }
+                                    }while(valid == false || nextVal == 0);
+                 */
             }
         });
     }
