@@ -14,8 +14,8 @@ import csintsy.file_man.ReadFile;
  * Graph
  */
 public class Graph {
-  public static final String FILENAME = "test.csv";
-  public static final String FILE_H = FILENAME.split("[.csv]")[0];
+  public static final String FILENAME = "distances.csv";
+  public static final String FILE_H = FILENAME.split("\\.")[0] + "_h.csv";
   ReadFile rf;
   // Map implmentation from https://www.baeldung.com/java-graphs
   private Map<Integer, ArrayList<Edge>> adjVertices;
@@ -27,12 +27,13 @@ public class Graph {
    * Initialize Nodes and Edges within Graph constructor.
    */
   public Graph(){
-    System.out.println("FILE_H: " + FILE_H);
+    // System.out.println("FILE_H: " + FILE_H);
     rf = new ReadFile();
     hasHeuristicFile = rf.initRead(FILE_H);            // read file with node and heuristic val first
     adjVertices = new HashMap<>();
     nameToUid = new HashMap<>();
     UidToNode = new HashMap<>();
+    // printAllNodes();
     initGraph();
   };
 
@@ -123,6 +124,7 @@ public void printNodeEdges() {
       Node destNode = UidToNode.get(edge.destUid);
       System.out.print(destNode.getName() + "[" + edge.weight + "] ");
     }
+    System.out.println();
   }
 }
 

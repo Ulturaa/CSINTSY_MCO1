@@ -19,7 +19,7 @@ public class ReadFile {
 
   // CSV parsing from https://www.baeldung.com/java-csv-file-array
   public boolean initRead(String fileName) {
-    boolean skipFirst = false;
+    boolean skipFirst = true;
     try (BufferedReader br = new BufferedReader(new InputStreamReader(
             this.getClass().getResourceAsStream("/" + fileName)))) {
       String line;
@@ -28,6 +28,7 @@ public class ReadFile {
         line = line.trim();
 
         if (line.isEmpty() || line.startsWith("#")) continue;
+        
         if (skipFirst) {
           skipFirst = false;
           continue;
