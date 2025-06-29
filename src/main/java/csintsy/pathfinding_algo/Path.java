@@ -50,7 +50,7 @@ public class Path implements Cloneable {
         if (pth.isEmpty()) {
             return startNodeUid; // If no edges, we're still at start
         }
-        
+
         Edge[] edges = pth.toArray(new Edge[0]);
         return edges[edges.length - 1].getdestUid();
     }
@@ -64,12 +64,12 @@ public class Path implements Cloneable {
     public List<Integer> getNodeSequence() {
         List<Integer> nodes = new ArrayList<>();
         nodes.add(startNodeUid); // Add start node
-        
+
         // Add destination of each edge
         for (Edge edge : pth) {
             nodes.add(edge.getdestUid());
         }
-        
+
         return nodes;
     }
 
@@ -92,7 +92,7 @@ public class Path implements Cloneable {
     public void dumpPth() {
         System.out.println("\n=== PATH DETAILS ===");
         System.out.println("Start node: " + startNodeUid);
-        
+
         if (pth.isEmpty()) {
             System.out.println("No edges (still at start)");
         } else {
@@ -100,7 +100,7 @@ public class Path implements Cloneable {
             int step = 1;
             for (Edge edge : pth) {
                 System.out.println("  Step " + step + ": -> " + 
-                                 edge.getdestUid() + " (cost: " + edge.getWeight() + ")");
+                        edge.getdestUid() + " (cost: " + edge.getWeight() + ")");
                 step++;
             }
         }

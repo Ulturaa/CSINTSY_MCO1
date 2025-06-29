@@ -8,6 +8,7 @@ import csintsy.graphrel.Node;
 
 public class AStar {
     private Graph graph;
+    int goalUid;
     // private 
 
     public AStar(Graph g) {
@@ -28,6 +29,7 @@ public class AStar {
             NodeRecord current = openSet.poll();
 
             if (current.uid == goalUid) {
+                System.out.println("A* cost: " + current.gCost);
                 return reconstructPath(current);
             }
 
@@ -57,8 +59,11 @@ public class AStar {
         return new ArrayList<>(); // No path found
     }
 
-   private double heuristic(Node node) {
-    return node.getVal();
+    private double heuristic(Node node) {
+        if (node.getVal() == goalUid) {
+            return 0;
+        }
+        return node.getVal();
     }
 
     private ArrayList<Integer> reconstructPath(NodeRecord goal) {
