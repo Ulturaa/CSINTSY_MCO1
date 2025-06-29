@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,7 +16,7 @@ public class appcontroller {
     private appmodel am;
     private Graph graph;
 
-    public appcontroller(foodSpot[] nodes) {
+    public appcontroller(ArrayList<foodSpot> nodes) {
         this.am = new appmodel();
         this.av = new appview(nodes);
         this.graph = new Graph();
@@ -24,8 +25,8 @@ public class appcontroller {
             graph.addFS(node);
         }
 
-        for (int i = 0; i < nodes.length - 1; i++) {
-            graph.addEdge(nodes[i].getID(), nodes[i + 1].getID(), 1);
+        for (int i = 0; i < nodes.size() - 1; i++) {
+            graph.addEdge(nodes.get(i).getID(), nodes.get(i+1).getID(), 1);
         }
 
         this.av.clrBtnActionListener(new ActionListener() {
@@ -83,22 +84,22 @@ public class appcontroller {
                         // Check for invalid inputs
                         if((fromNode.getText().trim().length() == 1 && fromNode.getText().trim().matches("[A-Z]{1}")) && (toNode.getText().trim().length() == 1 && toNode.getText().trim().matches("[A-Z]{1}"))){   // Use regex to verify
                                 // Check if nodes exist
-                            for(int i=0; i<nodes.length; i++){
-                                if(toNode.getText().trim().charAt(0) == nodes[i].getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                            for(int i=0; i<nodes.size(); i++){
+                                if(toNode.getText().trim().charAt(0) == nodes.get(i).getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
                                     foundTo = true;
-                                    i = nodes.length; // Force end the loop
+                                    i = nodes.size(); // Force end the loop
                                 }
                             }
-                            for(int i=0; i<nodes.length; i++){
-                                if(fromNode.getText().trim().charAt(0) == nodes[i].getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                            for(int i=0; i<nodes.size(); i++){
+                                if(fromNode.getText().trim().charAt(0) == nodes.get(i).getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
                                     foundFrom = true;
-                                    i = nodes.length; // Force end the loop
+                                    i = nodes.size(); // Force end the loop
                                 }
                             }
 
                             if(foundFrom == true){
                                 if(foundTo == true){
-                                    runAlgorithms(); // Run the algorithm here
+                                    runAlgorithms(fromNode.getText().trim().charAt(0), toNode.getText().trim().charAt(0)); // Run the algorithm here
                                     JOptionPane.showMessageDialog(null, "Route has been mapped!", "Success", JOptionPane.PLAIN_MESSAGE);
                                     val = 1;
                                     end = true;
@@ -154,11 +155,11 @@ public class appcontroller {
                         if(name.getText().trim().length() == 1 && name.getText().trim().matches("[A-Z]{1}")){   // Use regex to verify
                             
                             // Check if duplicate
-                            for(int i=0; i<nodes.length; i++){
-                                if(name.getText().trim().charAt(0) == nodes[i].getID()){                                                // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                            for(int i=0; i<nodes.size(); i++){
+                                if(name.getText().trim().charAt(0) == nodes.get(i).getID()){                                                // Convert to char and compare with ID. *** Change this later to work with nodes ***
                                     JOptionPane.showMessageDialog(null, "ERROR: Name already exists", "Error", JOptionPane.ERROR_MESSAGE);
                                     dupes = true;
-                                    i = nodes.length; // Force end the loop
+                                    i = nodes.size(); // Force end the loop
                                 }
                             }
 
@@ -195,14 +196,23 @@ public class appcontroller {
         this.av.delBtnActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String[] resto = new String[nodes.length];          // Create array
-                for(int i=0; i<nodes.length; i++){                  // Fill array for combobox input
-                    resto[i] = nodes[i].getName();
+                String[] resto = new String[nodes.size()];          // Create array
+                for(int i=0; i<nodes.size(); i++){                  // Fill array for combobox input
+                    resto[i] = nodes.get(i).getName();
                 } 
                 String op = (String)JOptionPane.showInputDialog(null, "Which node to delete?", "Delete Node", JOptionPane.PLAIN_MESSAGE, null, resto, resto[0]);
                 
                 if((op != null) && (op.length() > 0)){  // Print if confirmed
-                    System.out.println("Option dialogue: " + op);
+                    int index = -1;
+                    for(int i=0; i<nodes.size(); i++){
+                        if(nodes.get(i).getName() == op){
+                            index = i;
+                            i = nodes.size();
+                        }
+                    }
+                    graph.removeFS(nodes.get(index).getID());
+                    nodes.remove(index);
+                    av.updateBoxes(nodes);
                 }
             }
         });
@@ -238,17 +248,17 @@ public class appcontroller {
                         // Check for data type
                         if((nodeA.getText().trim().length() == 1 && nodeA.getText().trim().matches("[A-Z]{1}")) && (nodeB.getText().trim().length() == 1 && nodeB.getText().trim().matches("[A-Z]{1}"))){
                             // check if Existing input
-                            for(int i=0; i<nodes.length; i++){
-                                if(nodeA.getText().trim().charAt(0) == nodes[i].getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                            for(int i=0; i<nodes.size(); i++){
+                                if(nodeA.getText().trim().charAt(0) == nodes.get(i).getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
                                     foundA = true;
-                                    i = nodes.length; // Force end the loop
+                                    i = nodes.size(); // Force end the loop
                                 }
                             }
 
-                            for(int i=0; i<nodes.length; i++){
-                                if(nodeB.getText().trim().charAt(0) == nodes[i].getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                            for(int i=0; i<nodes.size(); i++){
+                                if(nodeB.getText().trim().charAt(0) == nodes.get(i).getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
                                     foundB = true;
-                                    i = nodes.length; // Force end the loop
+                                    i = nodes.size(); // Force end the loop
                                 }
                             }
 
@@ -283,9 +293,7 @@ public class appcontroller {
     }
 
     // crap doesnt work properly yet, the start and end nodes still hardcoded
-    private void runAlgorithms() {
-        char start = 'A';
-        char goal = 'U';
+    private void runAlgorithms(char start, char goal) {
 
         // bfs
         long bfsStart = System.nanoTime();

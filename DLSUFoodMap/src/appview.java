@@ -27,9 +27,9 @@ public class appview extends JFrame{
     
     // Create a new class for the results tab? Since both sections will contain the same thing IDK
 
-    private foodSpot[] nodes;
+    private ArrayList<foodSpot> nodes;
     
-    public appview(foodSpot[] nodes){
+    public appview(ArrayList<foodSpot> nodes){
 
         this.nodes = nodes;
 
@@ -64,9 +64,9 @@ public class appview extends JFrame{
         resultsPanel.setBackground(new Color(56,94,60));
         resultsPanel.setBounds(805, 15, 404, 650);
         
-        cBox = new JCheckBox[this.nodes.length];
-        for (int i = 0; i < nodes.length; i++) {
-            cBox[i] = new JCheckBox(this.nodes[i].getID() + " | " + this.nodes[i].getName());
+        cBox = new JCheckBox[this.nodes.size()];
+        for (int i = 0; i < nodes.size(); i++) {
+            cBox[i] = new JCheckBox(this.nodes.get(i).getID() + " | " + this.nodes.get(i).getName());
             cBox[i].setFocusable(false);
             cBox[i].setOpaque(false);
             cBox[i].setForeground(Color.BLACK);
@@ -187,4 +187,20 @@ public class appview extends JFrame{
         rB.UpdateTexts(score, path, time, memory, optimal);
     }
 
+    public void updateBoxes(ArrayList<foodSpot> nodes){
+        boxPanel.removeAll();
+
+        cBox = new JCheckBox[this.nodes.size()];
+        for (int i = 0; i < nodes.size(); i++) {
+            cBox[i] = new JCheckBox(this.nodes.get(i).getID() + " | " + this.nodes.get(i).getName());
+            cBox[i].setFocusable(false);
+            cBox[i].setOpaque(false);
+            cBox[i].setForeground(Color.BLACK);
+            cBox[i].setSelected(true);
+            boxPanel.add(cBox[i]);
+        }
+
+        boxPanel.revalidate();;
+        boxPanel.repaint();
+    }
 }
