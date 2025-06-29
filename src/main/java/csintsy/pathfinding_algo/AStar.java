@@ -16,6 +16,7 @@ public class AStar {
     }
 
     public ArrayList<Integer> findPath(int startUid, int goalUid) {
+        this.goalUid = goalUid;
         Map<Integer, Node> uidToNode = graph.getUidToNode();
         PriorityQueue<NodeRecord> openSet = new PriorityQueue<>(Comparator.comparingDouble(n -> n.fCost));
         Map<Integer, NodeRecord> allNodes = new HashMap<>();
@@ -60,10 +61,21 @@ public class AStar {
     }
 
     private double heuristic(Node node) {
-        if (node.getVal() == goalUid) {
+        int weight = 2;
+        if (node.getUid() == goalUid) {
             return 0;
+        } else {
+            // modified heuristic calculation to make the difference substantial enough
+            // for both UCS and A* pathing in some nodes to 
+            float currentRating = node.getVal();
+            float goalRating = graph.getNodeByUid(goalUid).getVal();
+
+            float ratingFactor = (5 - currentRating) * 20;
+
+            float goalDiff = Math.abs(currentRating - goalRating);
+
+            return (ratingFactor + goalDiff) * weight;
         }
-        return node.getVal();
     }
 
     private ArrayList<Integer> reconstructPath(NodeRecord goal) {

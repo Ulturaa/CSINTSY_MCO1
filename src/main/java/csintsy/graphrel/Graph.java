@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 
 import csintsy.file_man.ReadFile;
 
@@ -52,7 +52,7 @@ public class Graph {
                     heuristicVal = 0;
                 }
                 if (!nameToUid.containsKey(nodeName)) {
-                    Node newFromNode = new Node(nodeName, 0 - heuristicVal * 20); // multiply herusitic
+                    Node newFromNode = new Node(nodeName, heuristicVal); 
                     addNode(newFromNode);
                 }
             }
@@ -188,4 +188,7 @@ public class Graph {
         return nameToUid;
     }
 
+    public Set<Integer> getAllNodeUids() {
+        return UidToNode.keySet();
+    }
 }

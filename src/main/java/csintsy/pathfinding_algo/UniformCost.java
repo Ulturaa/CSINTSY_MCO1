@@ -70,6 +70,7 @@ public class UniformCost {
         System.out.println("Total Cost: " + finalPath.getCost());
     }
 
+
     public void calcPath(int fromUid, int toUid) {
         this.fromUid = fromUid;
         this.toUid = toUid;

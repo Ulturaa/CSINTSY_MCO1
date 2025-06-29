@@ -1,25 +1,23 @@
 # CSV for heuristic values
-# Changed values for distances_h.csv to exemplify differences
-# between each nodes
 Node, Heuristic_Val columns
-A,1.9
+A,3.9
 B,4.2
-C,2
+C,3
 D,4.5
 E,4.7
-F,1.7
+F,4.7
 G,3
-H,2.3
+H,4.3
 I,4.9
-J,1.0
-K,5
-L,2.4
-M,5
-N,1.7
-O,2.4
+J,4.0
+K,4.4
+L,4.4
+M,4.1
+N,3.7
+O,4.4
 P,4.2
-Q,3.1
-R,2.5
+Q,4.1
+R,4.5
 S,5.0
-T,1.6
-U,2.0
+T,4.6
+U,4.0
