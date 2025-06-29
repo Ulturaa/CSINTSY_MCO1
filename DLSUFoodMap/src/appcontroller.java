@@ -132,17 +132,21 @@ public class appcontroller {
                 String[] prompts = {"Connect this node to another", "Add another node", "Return to menu"};
                 boolean valid, dupes;
                 int formVal, nextVal;                                                  // Return value of the Option Panes
-                JTextField name, hVal;
+                JTextField name, id, hVal;
                 JPanel newNode;
 
                 newNode = new JPanel();
-                newNode.add(new JLabel("Node name: "));
-                newNode.add(name = new JTextField(3));
+                newNode.add(new JLabel("Node ID: "));
+                newNode.add(id = new JTextField(3));
+                newNode.add(Box.createHorizontalStrut(15));                 // spacer
+                newNode.add(new JLabel("Node Name: "));
+                newNode.add(name = new JTextField(8));
                 newNode.add(Box.createHorizontalStrut(15));                 // spacer
                 newNode.add(new JLabel("Heuristic Value: "));
                 newNode.add(hVal = new JTextField(3));
                 
                 do{
+                    id.setText("");
                     name.setText("");   // Clear text field
                     hVal.setText("");
                     valid = false;
@@ -152,12 +156,12 @@ public class appcontroller {
 
                     if(formVal == 0) {
                         // Check for invalid inputs
-                        if(name.getText().trim().length() == 1 && name.getText().trim().matches("[A-Z]{1}")){   // Use regex to verify
+                        if(id.getText().trim().length() == 1 && id.getText().trim().matches("[A-Z]{1}")){   // Use regex to verify
                             
                             // Check if duplicate
                             for(int i=0; i<nodes.size(); i++){
-                                if(name.getText().trim().charAt(0) == nodes.get(i).getID()){                                                // Convert to char and compare with ID. *** Change this later to work with nodes ***
-                                    JOptionPane.showMessageDialog(null, "ERROR: Name already exists", "Error", JOptionPane.ERROR_MESSAGE);
+                                if(id.getText().trim().charAt(0) == nodes.get(i).getID()){                                                // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                    JOptionPane.showMessageDialog(null, "ERROR: Node already exists", "Error", JOptionPane.ERROR_MESSAGE);
                                     dupes = true;
                                     i = nodes.size(); // Force end the loop
                                 }
@@ -170,7 +174,11 @@ public class appcontroller {
                                     /*
                                      * Code to add to list goes here
                                      */
-                                    JOptionPane.showMessageDialog(null, "Success! Added Node " + name.getText(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
+
+                                    nodes.add(new foodSpot(name.getText().trim(), id.getText().trim().charAt(0), 1, 0, 0));
+                                    graph.addFS(nodes.get(nodes.size()-1));
+                                    av.updateBoxes(nodes);
+                                    JOptionPane.showMessageDialog(null, "Success! Added Node " + id.getText().trim() + " | " + name.getText().trim(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
                                     valid = true;
                                     formVal = 1;
 
@@ -266,11 +274,7 @@ public class appcontroller {
                             if(foundA == true) {
                                 if(foundB == true) {
                                     if(weight.getText().matches("\\d+")) {
-                                        /*
-                                         * 
-                                         * INSERT CODE HERE TO ADD AN EDGE
-                                         * 
-                                         */
+                                        graph.addEdge(nodeA.getText().trim().charAt(0), nodeB.getText().trim().charAt(0), Integer.parseInt(weight.getText()));
                                         JOptionPane.showMessageDialog(null, "Success! Added edge from " + nodeA.getText() + " to " + nodeB.getText(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
                                         // If user Selects yes, nothing happens then reset. If User selects no, exit = true and exists.
                                         if(JOptionPane.showConfirmDialog(null, "Would you like to add another node", null, JOptionPane.YES_NO_OPTION) != 0)

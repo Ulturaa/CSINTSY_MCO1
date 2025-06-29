@@ -64,15 +64,7 @@ public class appview extends JFrame{
         resultsPanel.setBackground(new Color(56,94,60));
         resultsPanel.setBounds(805, 15, 404, 650);
         
-        cBox = new JCheckBox[this.nodes.size()];
-        for (int i = 0; i < nodes.size(); i++) {
-            cBox[i] = new JCheckBox(this.nodes.get(i).getID() + " | " + this.nodes.get(i).getName());
-            cBox[i].setFocusable(false);
-            cBox[i].setOpaque(false);
-            cBox[i].setForeground(Color.BLACK);
-            cBox[i].setSelected(true);
-            boxPanel.add(cBox[i]);
-        }
+        updateBoxes(nodes);
 
         clrBtn = new JButton("Clear");
         clrBtn.setForeground(Color.BLACK);
