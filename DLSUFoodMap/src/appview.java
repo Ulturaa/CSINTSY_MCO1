@@ -37,7 +37,7 @@ public class appview extends JFrame{
         this.setIconImage(ico.getImage());
         // Create the Frame
         this.setTitle("DLSU Food Map");
-        this.setSize(1280, 720);
+        this.setSize(1239, 720);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);  
@@ -61,8 +61,8 @@ public class appview extends JFrame{
 
         resultsPanel = new JPanel();
         resultsPanel.setLayout(new GridLayout());
-        resultsPanel.setBackground(Color.PINK);
-        resultsPanel.setBounds(846, 15, 404, 650);
+        resultsPanel.setBackground(new Color(56,94,60));
+        resultsPanel.setBounds(805, 15, 404, 650);
         
         cBox = new JCheckBox[this.nodes.length];
         for (int i = 0; i < nodes.length; i++) {

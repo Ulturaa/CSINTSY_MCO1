@@ -1,1 +1,6 @@
-o
+    1. Option Pane pops up and requests for the name of node (ie ID; char value)
+                    2. Verify that there are no duplicate IDs and that it is a valid character (A-Z only caps ig?)
+                        2a. If there is an error, error pane pops up with the error (duplicate or invalid name). Closes error pane and new option pane displayed
+                        2b. If no error, proceed
+                    3. Prompt user for the heuristic value. Verify if valid value (positive integer)
+                        3a. If not proper value (negative, float, charater, etc.) then post error and re-prompt user

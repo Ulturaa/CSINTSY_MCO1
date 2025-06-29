@@ -13,6 +13,7 @@ public class ResultsPane extends JPanel {
         title.setFont(new Font("Dialog", Font.PLAIN, 25));
         title.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setForeground(Color.BLACK);
         
         this.text = new JTextArea();
         text.setLineWrap(true);
@@ -22,6 +23,7 @@ public class ResultsPane extends JPanel {
         text.setFocusable(false);     // Optional: skip tab focus
         text.setBorder(null);         // Optional: remove borders
         text.setFont(new Font("Dialog", Font.PLAIN, 15));
+        text.setForeground(Color.BLACK);
         
         this.setOpaque(false);
         this.add(title);
@@ -29,6 +31,6 @@ public class ResultsPane extends JPanel {
     }
 
     public void UpdateTexts(int score, String path, String tc, String mc, String optimality){
-        this.text.setText("Score: " + score + "\n\nPath: " + path + "\n\nTime Complexity: " + tc + "\n\nMemory Complexity: " + mc + "\n\nOptimal: " + optimality);
+        this.text.setText("Score: " + score + "\n\nPath: " + path + "\n\nRun Time: " + tc + "\n\nMemory Complexity: " + mc + "\n\nOptimal: " + optimality);
     }
 }

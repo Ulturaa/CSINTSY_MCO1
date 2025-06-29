@@ -3,11 +3,17 @@ import java.util.*;
 class appmodel {
 
     /*
-        Data should be stored/manipulated(woah) here
+        Data should be stored/manipulated
         But file reading can be done in the driver for ease and easier error handling.
         To sick to implement right now
     */
 
+    /*
+        Since foodSpot and node are different, Foodspot contains the name of the node (The name of the food place)
+        Name of node = ID of foodSpot
+        Node - The actual class used for the algorithms
+        foodSpot - for the Map interface, visual clarity of the map
+     */
 
     public List<Character> bfs(Graph graph, char start, char goal) {
         Queue<List<Character>> queue = new LinkedList<>();

@@ -120,20 +120,19 @@ public class appcontroller {
         this.av.addBtnActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*  Im too lazy to implement this shit
-
-                1. Option Pane pops up and requests for the name of node (ie ID; char value)
-                2. Verify that there are no duplicate IDs and that it is a valid character (A-Z only caps ig?)
-                    2a. If there is an error, error pane pops up with the error (duplicate or invalid name). Closes error pane and new option pane displayed
-                    2b. If no error, proceed
-                3. Prompt user for the heuristic value. Verify if valid value (positive integer)
-                    3a. If not proper value (negative, float, charater, etc.) then post error and re-prompt user
+                /*
+                    1. Option Pane pops up and requests for the name of node (ie ID; char value)
+                    2. Verify that there are no duplicate IDs and that it is a valid character (A-Z only caps ig?)
+                        2a. If there is an error, error pane pops up with the error (duplicate or invalid name). Closes error pane and new option pane displayed
+                        2b. If no error, proceed
+                    3. Prompt user for the heuristic value. Verify if valid value (positive integer)
+                        3a. If not proper value (negative, float, charater, etc.) then post error and re-prompt user
                 */
                 String[] prompts = {"Connect this node to another", "Add another node", "Return to menu"};
                 boolean valid, dupes;
                 int formVal, nextVal;                                                  // Return value of the Option Panes
-                JTextField name, hVal, prompt, toNode, weight;
-                JPanel newNode, connectNode;
+                JTextField name, hVal;
+                JPanel newNode;
 
                 newNode = new JPanel();
                 newNode.add(new JLabel("Node name: "));
@@ -141,14 +140,6 @@ public class appcontroller {
                 newNode.add(Box.createHorizontalStrut(15));                 // spacer
                 newNode.add(new JLabel("Heuristic Value: "));
                 newNode.add(hVal = new JTextField(3));
-
-                connectNode = new JPanel();
-                connectNode.add(new JLabel("Destination node: "));
-                connectNode.add(toNode = new JTextField(3));
-                connectNode.add(Box.createHorizontalStrut(15));                 // spacer
-                connectNode.add(new JLabel("Weight: "));
-                connectNode.add(weight = new JTextField(3));
-
                 
                 do{
                     name.setText("");   // Clear text field
@@ -192,7 +183,6 @@ public class appcontroller {
 
                         
                     } else {
-                        // Exit
                         valid = true;
                         formVal = 1;
                     }
@@ -220,68 +210,74 @@ public class appcontroller {
         this.av.addEdgeBtnActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*
-                // Set up for next window (Prompt for adding edges, adding another node, or exit)
-                                    do{
 
-                                        nextVal = JOptionPane.showOptionDialog(null, "What would you like to do next?", "Next Action", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, prompts, prompts[0]);
-                                        
-                                        switch (nextVal) {
-                                            case 0:
-                                                toNode.setText("");
-                                                weight.setText("");
-                                                valid = false;
-                                                
+                boolean foundA, foundB, exit;
+                int nextVal;
+                JTextField nodeA, nodeB, weight;
+                JPanel connectNode;
+                
+                connectNode = new JPanel();
+                connectNode.add(new JLabel("Node A: "));
+                connectNode.add(nodeA = new JTextField(3));
+                connectNode.add(Box.createHorizontalStrut(15));                 // spacer
+                connectNode.add(new JLabel("Node B: "));
+                connectNode.add(nodeB = new JTextField(3));
+                connectNode.add(Box.createHorizontalStrut(15));                 // spacer
+                connectNode.add(new JLabel("Weight: "));
+                connectNode.add(weight = new JTextField(3));
 
-                                                // Connect to another node
+                do{
+                    nodeA.setText("");
+                    nodeB.setText("");
+                    weight.setText("");
+                    exit = false;
+                    foundA = false;
+                    foundB = false;
 
-                                                do{
-                                                    toNode.setText("");
-                                                    weight.setText("");
-                                                    if(JOptionPane.showConfirmDialog(null, connectNode, "Enter Node details", JOptionPane.OK_CANCEL_OPTION) == 0){
-                                                        // if selected, then check for data type
+                    if(JOptionPane.showConfirmDialog(null, connectNode, "Enter Node details", JOptionPane.OK_CANCEL_OPTION) == 0){
+                        // Check for data type
+                        if((nodeA.getText().trim().length() == 1 && nodeA.getText().trim().matches("[A-Z]{1}")) && (nodeB.getText().trim().length() == 1 && nodeB.getText().trim().matches("[A-Z]{1}"))){
+                            // check if Existing input
+                            for(int i=0; i<nodes.length; i++){
+                                if(nodeA.getText().trim().charAt(0) == nodes[i].getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                    foundA = true;
+                                    i = nodes.length; // Force end the loop
+                                }
+                            }
 
-                                                        if(toNode.getText().trim().length() == 1 && toNode.getText().trim().matches("[A-Z]{1}")){
-                                                            // check if Existing input
-                                                            for(int i=0; i<nodes.length; i++){
-                                                                if(toNode.getText().trim().charAt(0) == nodes[i].getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
-                                                                    dupes = true;
-                                                                    i = nodes.length; // Force end the loop
-                                                                }
-                                                            }
+                            for(int i=0; i<nodes.length; i++){
+                                if(nodeB.getText().trim().charAt(0) == nodes[i].getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                    foundB = true;
+                                    i = nodes.length; // Force end the loop
+                                }
+                            }
 
-                                                            if(dupes == true) {
-                                                                if(weight.getText().matches("\\d+")) {
-                                                                    JOptionPane.showMessageDialog(null, "Good Job", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                                                    
-                                                                } else {
-                                                                    JOptionPane.showMessageDialog(null, "ERROR: Please enter a positive integer", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                                                }
-                                                            } else {
-                                                                JOptionPane.showMessageDialog(null, "ERROR: Node " + toNode.getText().trim() + " not found", "Error", JOptionPane.ERROR_MESSAGE);
-                                                            }
-                                                        } else {
-                                                            JOptionPane.showMessageDialog(null, "ERROR: Please input a character A-Z (Upper case only)", "Error", JOptionPane.ERROR_MESSAGE);
-                                                        }
-                                                        
-                                                    }
-                                                }while(valid == false);
-
-                                                break;
-                                            case 1:
-                                                // Return to the start of the operation, data was already saved.
-                                                valid = true;
-                                                formVal = 0;
-                                                nextVal = 1;
-                                                break;
-                                            default: 
-                                                // Third option and exit on top right || Close the form
-                                                valid = true;
-                                                formVal = 1;
-                                                nextVal = 1;
-                                        }
-                                    }while(valid == false || nextVal == 0);
-                 */
+                            // Logic and error handling
+                            if(foundA == true) {
+                                if(foundB == true) {
+                                    if(weight.getText().matches("\\d+")) {
+                                        /*
+                                         * 
+                                         * INSERT CODE HERE TO ADD AN EDGE
+                                         * 
+                                         */
+                                        JOptionPane.showMessageDialog(null, "Success! Added edge from " + nodeA.getText() + " to " + nodeB.getText(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
+                                        // If user Selects yes, nothing happens then reset. If User selects no, exit = true and exists.
+                                        if(JOptionPane.showConfirmDialog(null, "Would you like to add another node", null, JOptionPane.YES_NO_OPTION) != 0)
+                                            exit = true;
+                                    } else
+                                        JOptionPane.showMessageDialog(null, "ERROR: Weight must be a positive integer", "Error", JOptionPane.ERROR_MESSAGE);
+                                } else
+                                    JOptionPane.showMessageDialog(null, "ERROR: Node " + nodeB.getText().trim() + " not found", "Error", JOptionPane.ERROR_MESSAGE);
+                            } else
+                                JOptionPane.showMessageDialog(null, "ERROR: Node " + nodeA.getText().trim() + " not found", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else
+                            JOptionPane.showMessageDialog(null, "ERROR: Please input a character A-Z (Upper case only)", "Error", JOptionPane.ERROR_MESSAGE);
+                        
+                    } else {
+                        exit = true;
+                    }
+                }while(exit == false);
             }
         });
     }
