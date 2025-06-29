@@ -12,9 +12,10 @@ import javax.swing.JPanel;
 import javax.print.attribute.standard.Destination;
 import javax.swing.Box;
 
-import csintsy.graphrel.Edge;
 import csintsy.graphrel.Graph;
 import csintsy.graphrel.Node;
+import csintsy.pathfinding_algo.UniformCost;
+import csintsy.pathfinding_algo.AStar;
 
 public class appcontroller {
 
@@ -22,18 +23,10 @@ public class appcontroller {
     private appmodel am;
     private Graph graph;
 
-    public appcontroller(ArrayList<Node> nodes) {
+    public appcontroller() {
         this.am = new appmodel();
-        this.av = new appview(nodes);
+        this.av = new appview();        // Needs nodes later to create the checkboxes on the lower right
         this.graph = new Graph();
-
-        for (foodSpot node : nodes) {
-            graph.addFS(node);
-        }
-
-        for (int i = 0; i < nodes.size() - 1; i++) {
-            graph.addEdge(nodes.get(i).getID(), nodes.get(i+1).getID(), 1);
-        }
 
         this.av.clrBtnActionListener(new ActionListener() {
             @Override

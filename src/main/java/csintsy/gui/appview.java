@@ -35,9 +35,9 @@ public class appview extends JFrame{
 
     private ArrayList<Node> nodes;
     
-    public appview(ArrayList<foodSpot> nodes){
+    public appview(){ // removed array list here, add the nodes for it to update in the view
 
-        this.nodes = nodes;
+        //this.nodes = nodes;
 
         ImageIcon ico = new ImageIcon("images/Icon.png");
         this.setIconImage(ico.getImage());
