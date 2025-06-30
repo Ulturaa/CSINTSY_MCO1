@@ -244,17 +244,22 @@ public class Appcontroller {
                 String op = (String)JOptionPane.showInputDialog(null, "Which node to delete?", "Delete Node", JOptionPane.PLAIN_MESSAGE, null, resto, resto[0]);
                 
                 if((op != null) && (op.length() > 0)){  // Print if confirmed
-                    int index = -1;
+                	
+                	
+                	int index = -1;
                     for(int i=0; i<nodes.size(); i++){
                         if(nodes.get(i) == op){
                             index = i;
                             i = nodes.size();
                         }
                     }
-                    // graph.removeFS(nodes.get(index));
-                    nodes.remove(index);
-                    av.updateBoxes(nodes);
+                    JOptionPane.showMessageDialog(null, "Node " + op + " successfully deleted!", "", JOptionPane.PLAIN_MESSAGE);
+                	graph.removeNode(graph.getNodeByUid(graph.getUidByName(op)));	// Delete node from graph
+                	nodes.remove(index);											// Delete node from nodes array list
+                    av.updateBoxes(nodes);											// Update check boxes
                 }
+                
+                System.out.println("String op: " + op);
             }
         });
 
