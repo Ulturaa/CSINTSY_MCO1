@@ -299,6 +299,7 @@ public class Appcontroller {
                                         // add edge
                                         // graph.addEdge(nodeA.getText().trim().charAt(0), nodeB.getText().trim().charAt(0), Integer.parseInt(weight.getText()));
                                     	graph.addEdgeByUid(graph.getUidByName(strA), graph.getUidByName(strB), Integer.parseInt(weight.getText()));
+                                    	graph.addEdgeByUid(graph.getUidByName(strB), graph.getUidByName(strA), Integer.parseInt(weight.getText()));
                                         JOptionPane.showMessageDialog(null, "Success! Added edge from " + nodeA.getText() + " to " + nodeB.getText(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
                                         // If user Selects yes, nothing happens then reset. If User selects no, exit = true and exists.
                                         if(JOptionPane.showConfirmDialog(null, "Would you like to add another node", null, JOptionPane.YES_NO_OPTION) != 0)
