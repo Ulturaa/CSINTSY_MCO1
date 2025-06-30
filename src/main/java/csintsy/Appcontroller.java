@@ -261,8 +261,8 @@ public class Appcontroller {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                boolean foundA, foundB, exit;
-                int nextVal;
+                boolean exit;
+                String strA, strB;
                 JTextField nodeA, nodeB, weight;
                 JPanel connectNode;
                 
@@ -280,35 +280,24 @@ public class Appcontroller {
                     nodeA.setText("");
                     nodeB.setText("");
                     weight.setText("");
+                    strA = "";
+                    strB = "";
                     exit = false;
-                    foundA = false;
-                    foundB = false;
-
                     if(JOptionPane.showConfirmDialog(null, connectNode, "Enter Node details", JOptionPane.OK_CANCEL_OPTION) == 0){
                         // Check for data type
                         if((nodeA.getText().trim().length() == 1 && nodeA.getText().trim().matches("[A-Z]{1}")) && (nodeB.getText().trim().length() == 1 && nodeB.getText().trim().matches("[A-Z]{1}"))){
                             // check if Existing input
-                            for(int i=0; i<nodes.size(); i++){
-                                //matches ID to node input ID
-                                if(nodeA.getText().trim() == nodes.get(i)){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
-                                    foundA = true;
-                                    i = nodes.size(); // Force end the loop
-                                }
-                            }
-
-                            for(int i=0; i<nodes.size(); i++){
-                                if(nodeB.getText().trim() == nodes.get(i)){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
-                                    foundB = true;
-                                    i = nodes.size(); // Force end the loop
-                                }
-                            }
+                        	
+                        	strA = nodeA.getText().trim();
+                        	strB = nodeB.getText().trim();
 
                             // Logic and error handling
-                            if(foundA == true) {
-                                if(foundB == true) {
+                            if(graph.getUidByName(strA) != null) {
+                                if(graph.getUidByName(strB) != null) {
                                     if(weight.getText().matches("\\d+")) {
                                         // add edge
                                         // graph.addEdge(nodeA.getText().trim().charAt(0), nodeB.getText().trim().charAt(0), Integer.parseInt(weight.getText()));
+                                    	graph.addEdgeByUid(graph.getUidByName(strA), graph.getUidByName(strB), Integer.parseInt(weight.getText()));
                                         JOptionPane.showMessageDialog(null, "Success! Added edge from " + nodeA.getText() + " to " + nodeB.getText(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
                                         // If user Selects yes, nothing happens then reset. If User selects no, exit = true and exists.
                                         if(JOptionPane.showConfirmDialog(null, "Would you like to add another node", null, JOptionPane.YES_NO_OPTION) != 0)
