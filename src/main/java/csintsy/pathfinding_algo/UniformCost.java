@@ -13,139 +13,164 @@ import csintsy.graphrel.Graph;
  * UniformCost Search Implementation 
  */
 public class UniformCost {
-  Graph g;
-  PriorityQueue<Path> PQpaths;
-  Set<Integer> visited;
-  ArrayList<Edge> path;
-  Path finalPath;
-  int numOfNodes;
-  int fromUid;
-  int toUid;
-  StringBuilder sbFinalPth;
+    Graph g;
+    PriorityQueue<Path> PQpaths;
+    Set<Integer> visited;
+    ArrayList<Edge> path;
+    Path finalPath;
+    int numOfNodes;
+    int fromUid;
+    int toUid;
+    float avgRatings;
+    StringBuilder sbFinalPth;
 
-  public UniformCost(Graph g) {
-    this.numOfNodes = g.getNumberOfNodes();
-    this.PQpaths = new PriorityQueue<Path>(g.getNumberOfNodes(), new PathComparator());
-    this.g = g;
-    sbFinalPth = new StringBuilder();
-  }
-
-  void dumpPQElem() {
-    System.out.println("PQ Elements: " + PQpaths.size());
-    if (!PQpaths.isEmpty()) {
-      System.out.println("Head-Cost:" + PQpaths.peek().cost);
-      System.out.println("Head: " + g.getUidToName(PQpaths.peek().getCurrentNodeUid()));
-    } else {
-      System.out.println("PQpaths is empty");
+    public UniformCost(Graph g) {
+        this.numOfNodes = g.getNumberOfNodes();
+        this.PQpaths = new PriorityQueue<Path>(g.getNumberOfNodes(), new PathComparator());
+        this.g = g;
+        sbFinalPth = new StringBuilder();
     }
 
-    for (Path pth : PQpaths) {
-      System.out.println("Path cost: " + pth.cost);
-    }
-  }
-
-  public void dumpVisited() {
-    System.out.println();
-    System.out.print("Visited: ");
-    if (visited != null) {
-      for (Integer uid : visited) {
-        System.out.print(g.getUidToName(uid) + " ");
-      }
-    }
-    System.out.println();
-  }
-
-  public void printFinalPathInfo() {
-    List<Integer> pathSeq = finalPath.getNodeSequence();
-
-    System.out.println("Path: ");
-    int e = pathSeq.get(pathSeq.size() - 1);
-    for (Integer uid : pathSeq) {
-      String name = g.getUidToName(uid);
-      if (e == uid) {
-        System.out.print(name);
-      } else {
-        System.out.print(name + " -> ");
-      }
-    }
-    System.out.println();
-    System.out.println("Total Cost: " + finalPath.getCost());
-  }
-
-  public StringBuilder getFinalPathSB() {
-      List<Integer> pathSeq = finalPath.getNodeSequence();
-
-      sbFinalPth.append("Path: \n");
-      int e = pathSeq.get(pathSeq.size() - 1);
-      for (Integer uid : pathSeq) {
-        String name = g.getUidToName(uid);
-        if (e == uid) {
-            sbFinalPth.append(name);
+    void dumpPQElem() {
+        System.out.println("PQ Elements: " + PQpaths.size());
+        if (!PQpaths.isEmpty()) {
+            System.out.println("Head-Cost:" + PQpaths.peek().cost);
+            System.out.println("Head: " + g.getUidToName(PQpaths.peek().getCurrentNodeUid()));
         } else {
-            sbFinalPth.append(name + " -> ");
+            System.out.println("PQpaths is empty");
         }
-      }
 
-      return sbFinalPth;
-  }
-
-  public int getFinalCost() {
-      return finalPath.getCost();
-  }
-
-  public void calcPath(int fromUid, int toUid) {
-    this.fromUid = fromUid;
-    this.toUid = toUid;
-    // https://stackoverflow.com/questions/5192512/how-can-i-clear-or-empty-a-stringbuilder
-    sbFinalPth.setLength(0);            // clear StringBuilder
-
-    // Clear and initialize data structures
-    PQpaths.clear();
-    visited = new HashSet<Integer>();
-
-    // Start with initial path containing only the source node
-    Path initialPath = new Path(fromUid);
-    PQpaths.add(initialPath);
-
-    while (!PQpaths.isEmpty()) {
-
-      Path currentPath = PQpaths.poll();
-      int currentNodeUid = currentPath.getCurrentNodeUid();
-
-      // Check if goal is reached
-      if (currentNodeUid == toUid) {
-        this.finalPath = currentPath;
-        return;
-      }
-
-      if (visited.contains(currentNodeUid)) {
-        continue;
-      }
-
-      visited.add(currentNodeUid);
-
-      // Get edges from current node
-      ArrayList<Edge> nodeEdges = g.getNodeEdges(currentNodeUid);
-
-      // Explore all neighbors
-      if (nodeEdges != null) {
-        for (Edge edge : nodeEdges) {
-          int neighborUid = edge.getdestUid();
-
-          if (!visited.contains(neighborUid)) {
-            // Create new path by extending current path
-            Path newPath = currentPath.clone().addEdge(edge);
-            PQpaths.add(newPath);
-
-          }                
+        for (Path pth : PQpaths) {
+            System.out.println("Path cost: " + pth.cost);
         }
-      }             
     }
 
-    // No path found
-    System.out.println("No path found from " + g.getUidToName(fromUid) + 
-        " to " + g.getUidToName(toUid));
-    finalPath = null;
-    return;
-  }
+    public void dumpVisited() {
+        System.out.println();
+        System.out.print("Visited: ");
+        if (visited != null) {
+            for (Integer uid : visited) {
+                System.out.print(g.getUidToName(uid) + " ");
+            }
+        }
+        System.out.println();
+    }
+
+    public void printFinalPathInfo() {
+        List<Integer> pathSeq = finalPath.getNodeSequence();
+
+        System.out.println("Path: ");
+        int e = pathSeq.get(pathSeq.size() - 1);
+        for (Integer uid : pathSeq) {
+            String name = g.getUidToName(uid);
+            if (e == uid) {
+                System.out.print(name);
+            } else {
+                System.out.print(name + " -> ");
+            }
+        }
+        System.out.println();
+        System.out.println("Total Cost: " + finalPath.getCost());
+    }
+
+    public StringBuilder getFinalPathSB() {
+        List<Integer> pathSeq = finalPath.getNodeSequence();
+
+        sbFinalPth.append("Path: \n");
+        int e = pathSeq.get(pathSeq.size() - 1);
+        float acc = 0;
+        for (Integer uid : pathSeq) {
+            String name = g.getUidToName(uid);
+            if (e == uid) {
+                sbFinalPth.append(name);
+            } else {
+                sbFinalPth.append(name + " -> ");
+            }
+            acc += g.getNodeByUid(uid).getVal();
+        }
+
+        avgRatings = acc / pathSeq.size();
+
+        sbFinalPth.append("\n");
+        sbFinalPth.append("\n");
+
+        sbFinalPth.append("Path Average Rating: " + String.format("%.2f", avgRatings) + "★");
+
+        sbFinalPth.append("\n");
+
+        return sbFinalPth;
+    }
+
+    public int getFinalCost() {
+        return finalPath.getCost();
+    }
+
+    // calculates average rating of the final path
+    // public void calcAvgFinalPthRating() {
+    //
+    //     List<Integer> pathSeq = finalPath.getNodeSequence();
+    //
+    //     float acc = 0;
+    //     for (Integer uid : pathSeq) {
+    //         acc += g.getNodeByUid(uid).getVal();
+    //     }
+    //     avgRatings = acc / pathSeq.size();
+    // }
+    //
+    public void calcPath(int fromUid, int toUid) {
+        this.fromUid = fromUid;
+        this.toUid = toUid;
+        // https://stackoverflow.com/questions/5192512/how-can-i-clear-or-empty-a-stringbuilder
+        sbFinalPth.setLength(0);            // clear StringBuilder
+
+        // Clear and initialize data structures
+        PQpaths.clear();
+        visited = new HashSet<Integer>();
+
+        // Start with initial path containing only the source node
+        Path initialPath = new Path(fromUid);
+        PQpaths.add(initialPath);
+
+        while (!PQpaths.isEmpty()) {
+
+            Path currentPath = PQpaths.poll();
+            int currentNodeUid = currentPath.getCurrentNodeUid();
+
+            // Check if goal is reached
+            if (currentNodeUid == toUid) {
+                long stopTime = System.nanoTime();
+                this.finalPath = currentPath;
+                return;
+            }
+
+            if (visited.contains(currentNodeUid)) {
+                continue;
+            }
+
+            visited.add(currentNodeUid);
+
+            // Get edges from current node
+            ArrayList<Edge> nodeEdges = g.getNodeEdges(currentNodeUid);
+
+            // Explore all neighbors
+            if (nodeEdges != null) {
+                for (Edge edge : nodeEdges) {
+                    int neighborUid = edge.getdestUid();
+
+                    if (!visited.contains(neighborUid)) {
+                        // Create new path by extending current path
+                        Path newPath = currentPath.clone().addEdge(edge);
+                        PQpaths.add(newPath);
+
+                    }                
+                }
+            }             
+        }
+
+        // No path found
+        System.out.println("No path found from " + g.getUidToName(fromUid) + 
+                " to " + g.getUidToName(toUid));
+        finalPath = null;
+        return;
+    }
 }

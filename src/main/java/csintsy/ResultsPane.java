@@ -33,11 +33,11 @@ public class ResultsPane extends JPanel {
     }
 
     public void UpdateTexts(int score, String path){
-        this.text.setText("Score: " + score + "\n\nPath: " + path);
+        this.text.setText("Cost: " + score + "\n\nPath: " + path);
     }
 
     public void UpdateTexts(double score, String path){
-        this.text.setText("Score: " + score + "\n\nPath: " + path);
+        this.text.setText("Cost: " + String.format("%.0f", score) + "\n\nPath: " + path);
     }
 
     // public void UpdateTexts(int score, String path, String tc, String mc, String optimality){

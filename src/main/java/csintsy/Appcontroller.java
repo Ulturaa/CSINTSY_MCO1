@@ -30,8 +30,8 @@ public class Appcontroller {
         this.nodes = new ArrayList<String>();
         this.graph = new Graph();       // initialize Graph
                                         // this.am = new Appmodel();
-        this.ucs = new UniformCost(graph);
         this.astar = new AStar(graph);
+        this.ucs = new UniformCost(graph);
 
         nodes.addAll(graph.getAllNodeNames()); // store node names in nodes
                                                // graph.printNodeEdges();

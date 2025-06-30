@@ -60,7 +60,6 @@ public class Path implements Cloneable {
         return startNodeUid;
     }
 
-    // BETTER: Get path as list of node UIDs (start -> ... -> end)
     public List<Integer> getNodeSequence() {
         List<Integer> nodes = new ArrayList<>();
         nodes.add(startNodeUid); // Add start node

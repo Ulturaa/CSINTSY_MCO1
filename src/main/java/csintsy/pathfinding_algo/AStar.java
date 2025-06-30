@@ -12,6 +12,7 @@ public class AStar {
     StringBuilder sbFinalPth;
     ArrayList<Integer> finalPath;
     private int goalUid;
+    float avgRatings;
     // private 
 
     public AStar(Graph g) {
@@ -90,17 +91,28 @@ public class AStar {
         }
     }
 
-   public StringBuilder getFinalPathSB() {
-       for (Integer uid : finalPath) {
-           String name = graph.getUidToName(uid);
-           if (uid == goalUid) {
-               sbFinalPth.append(name);
-           } else {
-               sbFinalPth.append(name + " -> ");
-           }
-       }
-       return sbFinalPth;
-   }
+    public StringBuilder getFinalPathSB() {
+        float acc = 0;
+        for (Integer uid : finalPath) {
+            String name = graph.getUidToName(uid);
+            if (uid == goalUid) {
+                sbFinalPth.append(name);
+            } else {
+                sbFinalPth.append(name + " -> ");
+            }
+            acc += graph.getNodeByUid(uid).getVal();
+            System.out.println(uid);
+        }
+        sbFinalPth.append("\n");
+        sbFinalPth.append("\n");
+
+        avgRatings = acc / finalPath.size();
+
+        sbFinalPth.append("Path Average Rating: " + String.format("%.2f", avgRatings) + "★");
+
+        sbFinalPth.append("\n");
+        return sbFinalPth;
+    }
 
     private ArrayList<Integer> reconstructPath(NodeRecord goal) {
         ArrayList<Integer> path = new ArrayList<>();
