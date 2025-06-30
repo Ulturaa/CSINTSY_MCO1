@@ -33,7 +33,6 @@ public class Appcontroller {
         this.ucs = new UniformCost(graph);
         this.astar = new AStar(graph);
 
-        graph.printNodeEdges();
         nodes.addAll(graph.getAllNodeNames()); // store node names in nodes
                                                // graph.printNodeEdges();
         this.av = new Appview(graph, nodes);
@@ -206,7 +205,7 @@ public class Appcontroller {
                                 // Check for hVal
                                 // Check if if integer input
                             
-                            if (hVal.getText().matches("\\d+")) {
+                            if (hVal.getText().matches("^([0-4]\\.[0-9]|5\\.0)$")) {
                                 /*
                                  * Code to add to list goes here
                                  */
@@ -217,7 +216,7 @@ public class Appcontroller {
                                 try {
                                     String StrhValForm = hVal.getText().trim();
                                     float hValForm = Float.parseFloat(StrhValForm);
-                                    graph.addNode(new Node(name.getText(), hValForm));
+                                    graph.addNode(new Node(id.getText().trim(), hValForm, name.getText().trim()));
                                     nodes.add(idFormStr);
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
@@ -230,7 +229,7 @@ public class Appcontroller {
                                 formVal = 1;
 
                             } else {
-                                JOptionPane.showMessageDialog(null, "ERROR: Please enter a positive integer", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "ERROR: Please enter a float that is in the range of 0.0 ~ 5.0", "ERROR", JOptionPane.ERROR_MESSAGE);
                             }
 
                         } else {
