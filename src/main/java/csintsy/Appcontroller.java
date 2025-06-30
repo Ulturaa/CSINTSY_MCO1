@@ -186,7 +186,6 @@ public class Appcontroller {
                     if(formVal == 0) {
                         // Check for invalid inputs
                         String idFormStr = id.getText().trim();
-                        System.out.println("idFormStr: " + idFormStr);
                         if(idFormStr.length() == 1 && idFormStr.matches("[A-Z]{1}")){   // Use regex to verify
 
                             // Check if duplicate
