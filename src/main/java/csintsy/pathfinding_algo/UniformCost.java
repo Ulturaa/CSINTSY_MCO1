@@ -76,7 +76,6 @@ public class UniformCost {
     public StringBuilder getFinalPathSB() {
         List<Integer> pathSeq = finalPath.getNodeSequence();
 
-        sbFinalPth.append("Path: \n");
         int e = pathSeq.get(pathSeq.size() - 1);
         float acc = 0;
         for (Integer uid : pathSeq) {
