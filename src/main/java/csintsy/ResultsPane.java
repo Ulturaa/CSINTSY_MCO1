@@ -1,3 +1,5 @@
+package csintsy;
+
 import javax.swing.*;
 import java.awt.*;
 

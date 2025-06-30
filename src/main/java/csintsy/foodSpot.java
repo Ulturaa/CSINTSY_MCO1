@@ -1,3 +1,5 @@
+package csintsy;
+
 public class foodSpot {
 
     private String name;      // Name of foodspot

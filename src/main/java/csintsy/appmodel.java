@@ -1,3 +1,4 @@
+package csintsy;
 import java.util.*;
 
 class appmodel {

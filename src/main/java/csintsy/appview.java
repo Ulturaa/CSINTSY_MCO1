@@ -1,3 +1,5 @@
+package csintsy;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -33,7 +35,8 @@ public class appview extends JFrame{
 
         this.nodes = nodes;
 
-        ImageIcon ico = new ImageIcon("images/Icon.png");
+        // https://stackoverflow.com/questions/56387179/java-swing-maven-how-to-load-imageicon-in-jar-file
+        ImageIcon ico = new ImageIcon(getClass().getResource("/images/Icon.png"));
         this.setIconImage(ico.getImage());
         // Create the Frame
         this.setTitle("DLSU Food Map");
@@ -49,7 +52,7 @@ public class appview extends JFrame{
         mapPanel.setBackground(Color.CYAN);
         mapPanel.setBounds(15, 15, 756, 423);
         
-        Image img = new ImageIcon("images/map.png").getImage();                                     // This is the map image
+        Image img = new ImageIcon(getClass().getResource("/images/map.png")).getImage();                                     // This is the map image
         map = new JLabel(new ImageIcon(img.getScaledInstance(756, 423, Image.SCALE_SMOOTH)));   // Scale down the map to fit within the panel
         map.setBounds(0, 0, 756, 423);
         mapPanel.add(map);

@@ -1,6 +1,8 @@
+package csintsy;
+
 import java.util.ArrayList;
 
-public class driver {
+public class App {
     public static void main(String[] args) {
 
 
