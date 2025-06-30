@@ -1,4 +1,4 @@
-package csintsy;
+package csintsy.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,22 +8,31 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import csintsy.FoodSpot;
+import csintsy.graphrel.Graph;
+
 import javax.swing.JPanel;
 import javax.print.attribute.standard.Destination;
 import javax.swing.Box;
 
-public class appcontroller {
+public class Appcontroller {
+    
+    // TODO: replace Graph implementation from other branch
 
-    private appview av;
-    private appmodel am;
+    private Appview av;
+    private Appmodel am;
     private Graph graph;
 
-    public appcontroller(ArrayList<foodSpot> nodes) {
-        this.am = new appmodel();
-        this.av = new appview(nodes);
+    public Appcontroller() {
+        this.graph = new Graph();       // initialize Graph
+        this.am = new Appmodel();
+        this.av = new Appview(nodes);
         this.graph = new Graph();
 
-        for (foodSpot node : nodes) {
+        // addFS => addNode
+        // nodes will be automatically added within the Graph
+        for (FoodSpot node : nodes) {
             graph.addFS(node);
         }
 
@@ -138,6 +147,7 @@ public class appcontroller {
                 JPanel newNode;
 
                 newNode = new JPanel();
+                // node id is not needed
                 newNode.add(new JLabel("Node ID: "));
                 newNode.add(id = new JTextField(3));
                 newNode.add(Box.createHorizontalStrut(15));                 // spacer
@@ -177,7 +187,7 @@ public class appcontroller {
                                      * Code to add to list goes here
                                      */
 
-                                    nodes.add(new foodSpot(name.getText().trim(), id.getText().trim().charAt(0), 1, 0, 0));
+                                    nodes.add(new FoodSpot(name.getText().trim(), id.getText().trim().charAt(0), 1, 0, 0));
                                     graph.addFS(nodes.get(nodes.size()-1));
                                     av.updateBoxes(nodes);
                                     JOptionPane.showMessageDialog(null, "Success! Added Node " + id.getText().trim() + " | " + name.getText().trim(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
@@ -298,10 +308,10 @@ public class appcontroller {
         });
     }
 
-    // crap doesnt work properly yet, the start and end nodes still hardcoded
     private void runAlgorithms(char start, char goal) {
 
         // bfs
+        // Execution time isn't needed??
         long bfsStart = System.nanoTime();
         List<Character> bfsPath = am.bfs(graph, start, goal);
         long bfsEnd = System.nanoTime();

@@ -1,6 +1,6 @@
 package csintsy;
 
-public class foodSpot {
+public class FoodSpot {
 
     private String name;      // Name of foodspot
     private char id;       // ID (Node id ex. A, B, C)
@@ -8,7 +8,7 @@ public class foodSpot {
     private int x;           // X-coordinate
     private int y;           // Y-coordinate
     
-    public foodSpot(String name, char id, int value, int x, int y) {
+    public FoodSpot(String name, char id, int value, int x, int y) {
         this.name = name;
         this.id = id;
         this.value = value;

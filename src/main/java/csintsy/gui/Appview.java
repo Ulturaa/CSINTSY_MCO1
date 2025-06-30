@@ -1,4 +1,4 @@
-package csintsy;
+package csintsy.gui;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -8,6 +8,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.BorderFactory;
 import javax.swing.JTextArea;
+
+import csintsy.FoodSpot;
+import csintsy.ResultsPane;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -19,7 +22,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class appview extends JFrame{
+public class Appview extends JFrame{
 
     private JPanel mapPanel, boxPanel, resultsPanel;
     private JButton rstBtn, clrBtn, mapBtn, addBtn, delBtn, addEdgeBtn;
@@ -29,9 +32,9 @@ public class appview extends JFrame{
     
     // Create a new class for the results tab? Since both sections will contain the same thing IDK
 
-    private ArrayList<foodSpot> nodes;
+    private ArrayList<FoodSpot> nodes;
     
-    public appview(ArrayList<foodSpot> nodes){
+    public Appview(ArrayList<FoodSpot> nodes){
 
         this.nodes = nodes;
 
@@ -182,7 +185,7 @@ public class appview extends JFrame{
         rB.UpdateTexts(score, path, time, memory, optimal);
     }
 
-    public void updateBoxes(ArrayList<foodSpot> nodes){
+    public void updateBoxes(ArrayList<FoodSpot> nodes){
         boxPanel.removeAll();
 
         cBox = new JCheckBox[this.nodes.size()];

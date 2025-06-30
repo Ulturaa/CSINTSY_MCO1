@@ -1,7 +1,7 @@
-package csintsy;
+package csintsy.gui;
 import java.util.*;
 
-class appmodel {
+class Appmodel {
 
     /*
         Data should be stored/manipulated
