@@ -21,11 +21,13 @@ public class UniformCost {
   int numOfNodes;
   int fromUid;
   int toUid;
+  StringBuilder sbFinalPth;
 
   public UniformCost(Graph g) {
     this.numOfNodes = g.getNumberOfNodes();
     this.PQpaths = new PriorityQueue<Path>(g.getNumberOfNodes(), new PathComparator());
     this.g = g;
+    sbFinalPth = new StringBuilder();
   }
 
   void dumpPQElem() {
@@ -70,9 +72,32 @@ public class UniformCost {
     System.out.println("Total Cost: " + finalPath.getCost());
   }
 
+  public StringBuilder getFinalPathSB() {
+      List<Integer> pathSeq = finalPath.getNodeSequence();
+
+      sbFinalPth.append("Path: \n");
+      int e = pathSeq.get(pathSeq.size() - 1);
+      for (Integer uid : pathSeq) {
+        String name = g.getUidToName(uid);
+        if (e == uid) {
+            sbFinalPth.append(name);
+        } else {
+            sbFinalPth.append(name + " -> ");
+        }
+      }
+
+      return sbFinalPth;
+  }
+
+  public int getFinalCost() {
+      return finalPath.getCost();
+  }
+
   public void calcPath(int fromUid, int toUid) {
     this.fromUid = fromUid;
     this.toUid = toUid;
+    // https://stackoverflow.com/questions/5192512/how-can-i-clear-or-empty-a-stringbuilder
+    sbFinalPth.setLength(0);            // clear StringBuilder
 
     // Clear and initialize data structures
     PQpaths.clear();

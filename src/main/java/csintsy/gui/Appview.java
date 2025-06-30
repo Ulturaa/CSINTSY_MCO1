@@ -109,9 +109,9 @@ public class Appview extends JFrame{
         addEdgeBtn.setFocusable(false);
         addEdgeBtn.setBounds(630, 553, 90, 30);
 
-        rA = new ResultsPane("Blind Search");
+        rA = new ResultsPane("UCS");
         rA.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); // added boarder to look like padding
-        rB = new ResultsPane("Heuristic Search");
+        rB = new ResultsPane("A*");
         rB.setBorder(BorderFactory.createEmptyBorder(10,0,10,10));  // added boarder to look like padding
         resultsPanel.add(rA);
         resultsPanel.add(rB);
@@ -176,21 +176,25 @@ public class Appview extends JFrame{
 	}
 
     // hardcoded values for now
-    public void updateBlindSearch(String text) {
-        rA.UpdateTexts(0, text, "--", "--", "Yes");
+    // public void updateBlindSearch(String text) {
+    //     rA.UpdateTexts(0, text, "--", "--", "Yes");
+    // }
+    //
+    // public void updateHeuristicSearch(String text) {
+    //     rB.UpdateTexts(0, text, "--", "--", "Yes");
+    // }
+
+    public void updateBlindSearch(int score, String path) {
+        rA.UpdateTexts(score, path);
     }
 
-    public void updateHeuristicSearch(String text) {
-        rB.UpdateTexts(0, text, "--", "--", "Yes");
+    public void updateHeuristicSearch(int score, String path) {
+        rB.UpdateTexts(score, path);
     }
 
-    public void updateBlindSearch(int score, String path, String time, String memory, String optimal) {
-        rA.UpdateTexts(score, path, time, memory, optimal);
-    }
-
-    public void updateHeuristicSearch(int score, String path, String time, String memory, String optimal) {
-        rB.UpdateTexts(score, path, time, memory, optimal);
-    }
+    // public void updateHeuristicSearch(int score, String path, String time, String memory, String optimal) {
+    //     rB.UpdateTexts(score, path, time, memory, optimal);
+    // }
 
     public void dumpNodes() {
         System.out.println("==Dumping all nodes==");

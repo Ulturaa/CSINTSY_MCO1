@@ -31,21 +31,13 @@ public class Appcontroller {
         this.nodes = new ArrayList<String>();
         this.graph = new Graph();       // initialize Graph
         // this.am = new Appmodel();
+        this.ucs = new UniformCost(graph);
+        this.astar = new AStar(graph);
 
         nodes.addAll(graph.getAllNodeNames()); // store node names in nodes
-        graph.printNodeEdges();
+        // graph.printNodeEdges();
         this.av = new Appview(nodes);
-        av.dumpNodes();
-
-        // addFS => addNode
-        // nodes will be automatically added within the Graph
-        // for (FoodSpot node : nodes) {
-        //     graph.addFS(node);
-        // }
-
-        // for (int i = 0; i < nodes.size() - 1; i++) {
-        //     graph.addEdge(nodes.get(i).getID(), nodes.get(i+1).getID(), 1);
-        // }
+        // av.dumpNodes();
 
         this.av.clrBtnActionListener(new ActionListener() {
             @Override
@@ -138,8 +130,10 @@ public class Appcontroller {
                             System.out.println("Calculating Path");
                             int fromUid = graph.nameToUid(fromNodeStr);
                             int toUid = graph.nameToUid(toNodeStr);
+                            System.out.println("fromUid: " + fromUid + " toUid: " + toUid);
                             ucs.calcPath(fromUid, toUid);
                             astar.findPath(fromUid, toUid);
+                            av.updateBlindSearch(ucs.getFinalCost(), ucs.getFinalPathSB().toString());
 
                         } else {
                             JOptionPane.showMessageDialog(null, "ERROR: Please input a character A-Z (Upper case only)", "Error", JOptionPane.ERROR_MESSAGE);
