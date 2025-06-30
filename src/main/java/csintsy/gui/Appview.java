@@ -192,6 +192,10 @@ public class Appview extends JFrame{
         rB.UpdateTexts(score, path);
     }
 
+    public void updateHeuristicSearch(double score, String path) {
+        rB.UpdateTexts(score, path);
+    }
+
     // public void updateHeuristicSearch(int score, String path, String time, String memory, String optimal) {
     //     rB.UpdateTexts(score, path, time, memory, optimal);
     // }

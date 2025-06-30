@@ -134,6 +134,7 @@ public class Appcontroller {
                             ucs.calcPath(fromUid, toUid);
                             astar.findPath(fromUid, toUid);
                             av.updateBlindSearch(ucs.getFinalCost(), ucs.getFinalPathSB().toString());
+                            av.updateHeuristicSearch(astar.getFinalCost(), astar.getFinalPathSB().toString());
 
                         } else {
                             JOptionPane.showMessageDialog(null, "ERROR: Please input a character A-Z (Upper case only)", "Error", JOptionPane.ERROR_MESSAGE);
