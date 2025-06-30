@@ -140,7 +140,7 @@ public class Graph {
         UidToNode.remove(n.getUid());
     }
 
-    public int nameToUid(String name) {
+    public Integer nameToUid(String name) {
         return nameToUid.get(name);
     }
 

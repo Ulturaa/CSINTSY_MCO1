@@ -84,7 +84,9 @@ public class AStar {
 
             float goalDiff = Math.abs(currentRating - goalRating);
 
-            return (ratingFactor + goalDiff) * weight;
+            return Math.pow(ratingFactor + goalDiff, 2) * weight; // added exponential scaling for heuristic
+                                                                  // without this the path for AStar and UCS
+                                                                  // doesn't change that much
         }
     }
 
