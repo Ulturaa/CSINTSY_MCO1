@@ -23,6 +23,7 @@ public class Graph {
     public Map<String, Integer> nameToUid;
     Map<Integer, Node> UidToNode;
     boolean hasHeuristicFile;
+    ArrayList<Node> nodes;
 
     /**
      * Initialize Nodes and Edges within Graph constructor.
@@ -34,7 +35,7 @@ public class Graph {
         adjVertices = new HashMap<>();
         nameToUid = new HashMap<>();
         UidToNode = new HashMap<>();
-        // printAllNodes();
+        nodes = new ArrayList<>();
         initGraph();
     };
 
@@ -54,9 +55,10 @@ public class Graph {
                     heuristicVal = 0;
                 }
                 if (!nameToUid.containsKey(nodeName)) {
-                    Node newFromNode = new Node(nodeName, heuristicVal); 
+                    Node newFromNode = new Node(nodeName, heuristicVal, row.get(2)); 
                     addNode(newFromNode);
                 }
+                // System.out.println(row.get(0) + " " + row.get(1) + " " + row.get(2));
             }
         }
 
@@ -131,6 +133,9 @@ public class Graph {
         nameToUid.putIfAbsent(n.getName(), n.getUid());
         UidToNode.putIfAbsent(n.getUid(), n);
         adjVertices.putIfAbsent(n.getUid(), new ArrayList<Edge>());
+        if (!nodes.contains(n)) {
+            nodes.add(n);
+        }
     }
 
     public void removeNode(Node n) {
@@ -138,6 +143,7 @@ public class Graph {
         adjVertices.remove(n.getUid());
         nameToUid.remove(n.getName());
         UidToNode.remove(n.getUid());
+        nodes.remove(n);
     }
 
     public Integer nameToUid(String name) {
@@ -156,7 +162,7 @@ public class Graph {
         Edge newEdge = new Edge(to, weight);
         adjVertices.get(from).add(newEdge);
     }
-
+    
     private int getHeuristic(String nodeName) { // might use this for computing the total cost
         return 0;
     }

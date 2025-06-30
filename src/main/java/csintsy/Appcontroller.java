@@ -19,8 +19,6 @@ import javax.swing.Box;
 
 public class Appcontroller {
 
-    // TODO: replace Graph implementation from other branch
-
     private Appview av;
     // private Appmodel am;
     private Graph graph;
@@ -35,9 +33,10 @@ public class Appcontroller {
         this.ucs = new UniformCost(graph);
         this.astar = new AStar(graph);
 
+        graph.printNodeEdges();
         nodes.addAll(graph.getAllNodeNames()); // store node names in nodes
                                                // graph.printNodeEdges();
-        this.av = new Appview(nodes);
+        this.av = new Appview(graph, nodes);
         // av.dumpNodes();
 
         this.av.clrBtnActionListener(new ActionListener() {

@@ -9,6 +9,7 @@ public class Node {
     private static int idCounter = 0;
     private int uid; 
     private String name;
+    private String label;
     private int x = 0; // initialize Heuristic val to 0
 
 
@@ -27,6 +28,17 @@ public class Node {
         this.uid = idCounter++;
         this.val = nodeVal;
         this.name = name;
+    }
+
+    public Node(String name, float nodeVal, String label){
+        this.uid = idCounter++;
+        this.val = nodeVal;
+        this.label = label;
+        this.name = name;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     // Get methods

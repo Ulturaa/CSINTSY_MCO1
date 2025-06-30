@@ -19,6 +19,7 @@ public class ReadFile {
 
     // CSV parsing from https://www.baeldung.com/java-csv-file-array
     public boolean initRead(String fileName) {
+        records.clear();
         boolean skipFirst = true;
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
                         this.getClass().getResourceAsStream("/" + fileName)))) {

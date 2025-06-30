@@ -9,6 +9,7 @@ import javax.swing.JCheckBox;
 import javax.swing.BorderFactory;
 
 import csintsy.ResultsPane;
+import csintsy.graphrel.Graph;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,16 +26,19 @@ public class Appview extends JFrame{
     private JCheckBox[] cBox;
     private JLabel map;
     private ResultsPane rA, rB;
+    Graph graph;
     
     // Create a new class for the results tab? Since both sections will contain the same thing IDK
 
     private ArrayList<String> nodes;
     
-    public Appview(ArrayList<String> nodes){
+    public Appview(Graph g, ArrayList<String> nodes){
 
         this.nodes = new ArrayList<String>();
 
         this.nodes = nodes;
+
+        this.graph = g;
 
         initAV();
     }
@@ -212,7 +216,7 @@ public class Appview extends JFrame{
 
         cBox = new JCheckBox[this.nodes.size()];
         for (int i = 0; i < nodes.size(); i++) {
-            cBox[i] = new JCheckBox(this.nodes.get(i) + " | " + this.nodes.get(i));
+            cBox[i] = new JCheckBox(this.nodes.get(i) + " | " + graph.getNodeByUid(graph.getNameToUid().get(nodes.get(i))).getLabel());
             cBox[i].setFocusable(false);
             cBox[i].setOpaque(false);
             cBox[i].setForeground(Color.BLACK);

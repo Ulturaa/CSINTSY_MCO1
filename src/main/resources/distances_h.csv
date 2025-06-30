@@ -1,23 +1,23 @@
 # CSV for heuristic values
-Node, Heuristic_Val columns
-A,3.9
-B,4.2
-C,3
-D,4.5
-E,4.7
-F,4.7
-G,3
-H,4.3
-I,4.9
-J,4.0
-K,4.4
-L,4.4
-M,4.1
-N,3.7
-O,4.4
-P,4.2
-Q,4.1
-R,4.5
-S,5.0
-T,4.6
-U,4.0
+Node,Heuristic_Val columns,Label
+A,3.9,University Mall
+B,4.2,McDonald's
+C,3,Silingan Coffee
+D,4.5,Bloeman Hall
+E,4.7,Brothers Burger
+F,4.7,24 Chicken
+G,3,Chizzy New Cafe
+H,4.3,Agno Food Court
+I,4.9,Auro Chocolate Coffee
+J,4.0,Perico's Grill
+K,4.4,Hayashi
+L,4.4,Starbucks
+M,4.1,Sherwood Place
+N,3.7,Jollibee
+O,4.4,BOK Fried Chicken
+P,4.2,Zark's Burgers
+Q,4.1,RMZ Billiards
+R,4.5,Starbucs
+S,5.0,Haru Cafe
+T,4.6,Pho Mahal
+U,4.0,The Barn
