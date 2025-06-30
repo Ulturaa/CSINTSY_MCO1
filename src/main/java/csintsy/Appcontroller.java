@@ -1,19 +1,19 @@
-package csintsy.gui;
+package csintsy;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import csintsy.FoodSpot;
 import csintsy.graphrel.Graph;
+import csintsy.gui.Appview;
+import csintsy.pathfinding_algo.AStar;
+import csintsy.pathfinding_algo.UniformCost;
 
 import javax.swing.JPanel;
-import javax.print.attribute.standard.Destination;
 import javax.swing.Box;
 
 public class Appcontroller {
@@ -21,24 +21,31 @@ public class Appcontroller {
     // TODO: replace Graph implementation from other branch
 
     private Appview av;
-    private Appmodel am;
+    // private Appmodel am;
     private Graph graph;
+    AStar astar;
+    UniformCost ucs;
+    private ArrayList<String> nodes;
 
     public Appcontroller() {
+        this.nodes = new ArrayList<String>();
         this.graph = new Graph();       // initialize Graph
-        this.am = new Appmodel();
+        // this.am = new Appmodel();
+
+        nodes.addAll(graph.getAllNodeNames()); // store node names in nodes
+        graph.printNodeEdges();
         this.av = new Appview(nodes);
-        this.graph = new Graph();
+        av.dumpNodes();
 
         // addFS => addNode
         // nodes will be automatically added within the Graph
-        for (FoodSpot node : nodes) {
-            graph.addFS(node);
-        }
+        // for (FoodSpot node : nodes) {
+        //     graph.addFS(node);
+        // }
 
-        for (int i = 0; i < nodes.size() - 1; i++) {
-            graph.addEdge(nodes.get(i).getID(), nodes.get(i+1).getID(), 1);
-        }
+        // for (int i = 0; i < nodes.size() - 1; i++) {
+        //     graph.addEdge(nodes.get(i).getID(), nodes.get(i+1).getID(), 1);
+        // }
 
         this.av.clrBtnActionListener(new ActionListener() {
             @Override
@@ -84,47 +91,63 @@ public class Appcontroller {
                 mapP.add(new JLabel("Destination node:"));
                 mapP.add(toNode = new JTextField(3));
 
-                do{
+                do {
                     toNode.setText("");
                     fromNode.setText("");
                     foundTo = false;
                     foundFrom = false;
 
                     val = JOptionPane.showConfirmDialog(null, mapP, "Enter Node details", JOptionPane.OK_CANCEL_OPTION);
-                    if(val == 0) {
+                    if (val == 0) {
                         // Check for invalid inputs
-                        if((fromNode.getText().trim().length() == 1 && fromNode.getText().trim().matches("[A-Z]{1}")) && (toNode.getText().trim().length() == 1 && toNode.getText().trim().matches("[A-Z]{1}"))){   // Use regex to verify
-                                // Check if nodes exist
+                        if((fromNode.getText().trim().length() == 1
+                                    && fromNode.getText().trim().matches("[A-Z]{1}")) 
+                                    && (toNode.getText().trim().length() == 1 
+                                    && toNode.getText().trim().matches("[A-Z]{1}"))) {   // Use regex to verify
+                                                                                            // Check if nodes exist
+                                                                                            //
+                                                                                            // for(int i=0; i<nodes.size(); i++){
+                                                                                            //     if(toNode.getText().trim() == nodes.get(i)){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                                                                            //         foundTo = true;
+                                                                                            //         i = nodes.size(); // Force end the loop
+                                                                                            //     }
+                                                                                            // }
+                            // foundFrom = graph.nameToUid(fromNode.getText());
+                            String fromNodeStr = fromNode.getText().trim();
+                            String toNodeStr = toNode.getText();
+
                             for(int i=0; i<nodes.size(); i++){
-                                if(toNode.getText().trim().charAt(0) == nodes.get(i).getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
-                                    foundTo = true;
-                                    i = nodes.size(); // Force end the loop
-                                }
-                            }
-                            for(int i=0; i<nodes.size(); i++){
-                                if(fromNode.getText().trim().charAt(0) == nodes.get(i).getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                if(fromNode.getText().trim() == nodes.get(i)){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
                                     foundFrom = true;
                                     i = nodes.size(); // Force end the loop
                                 }
                             }
 
-                            if(foundFrom == true){
-                                if(foundTo == true){
-                                    runAlgorithms(fromNode.getText().trim().charAt(0), toNode.getText().trim().charAt(0)); // Run the algorithm here
-                                    JOptionPane.showMessageDialog(null, "Route has been mapped!", "Success", JOptionPane.PLAIN_MESSAGE);
-                                    val = 1;
-                                    end = true;
-                                } else
-                                    JOptionPane.showMessageDialog(null, "ERROR: Node " + toNode.getText().trim() + " not found", "Error", JOptionPane.ERROR_MESSAGE);
-                            }else 
-                                JOptionPane.showMessageDialog(null, "ERROR: Node " + fromNode.getText().trim() + " not found", "Error", JOptionPane.ERROR_MESSAGE);
+                            // checks if fromNode exists
+                            if (graph.getUidByName(fromNodeStr) == null) {
+                                JOptionPane.showMessageDialog(null, "ERROR: Node " + fromNodeStr + " not found", "Error", JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+
+                            // checks if toNode exists
+                            if (graph.getUidByName(toNodeStr) == null) {
+                                JOptionPane.showMessageDialog(null, "ERROR: Node " + toNodeStr + " not found", "Error", JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+
+                            System.out.println("Calculating Path");
+                            int fromUid = graph.nameToUid(fromNodeStr);
+                            int toUid = graph.nameToUid(toNodeStr);
+                            ucs.calcPath(fromUid, toUid);
+                            astar.findPath(fromUid, toUid);
+
                         } else {
                             JOptionPane.showMessageDialog(null, "ERROR: Please input a character A-Z (Upper case only)", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
                         end = true;
                     }
-                    
+
                 } while(end == false || val == 0);
             }
         });
@@ -172,7 +195,7 @@ public class Appcontroller {
                             
                             // Check if duplicate
                             for(int i=0; i<nodes.size(); i++){
-                                if(id.getText().trim().charAt(0) == nodes.get(i).getID()){                                                // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                if(id.getText().trim() == nodes.get(i)){                                                // Convert to char and compare with ID. *** Change this later to work with nodes ***
                                     JOptionPane.showMessageDialog(null, "ERROR: Node already exists", "Error", JOptionPane.ERROR_MESSAGE);
                                     dupes = true;
                                     i = nodes.size(); // Force end the loop
@@ -187,8 +210,10 @@ public class Appcontroller {
                                      * Code to add to list goes here
                                      */
 
-                                    nodes.add(new FoodSpot(name.getText().trim(), id.getText().trim().charAt(0), 1, 0, 0));
-                                    graph.addFS(nodes.get(nodes.size()-1));
+                                    // Creates  a FoodSpot and adds it into the graph??
+                                    // nodes.add(new FoodSpot(name.getText().trim(), id.getText().trim().charAt(0), 1, 0, 0));
+                                    // graph.addFS(nodes.get(nodes.size()-1));
+
                                     av.updateBoxes(nodes);
                                     JOptionPane.showMessageDialog(null, "Success! Added Node " + id.getText().trim() + " | " + name.getText().trim(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
                                     valid = true;
@@ -218,19 +243,20 @@ public class Appcontroller {
             public void actionPerformed(ActionEvent e) {
                 String[] resto = new String[nodes.size()];          // Create array
                 for(int i=0; i<nodes.size(); i++){                  // Fill array for combobox input
-                    resto[i] = nodes.get(i).getName();
+                    // stores node names to resto
+                    resto[i] = nodes.get(i);
                 } 
                 String op = (String)JOptionPane.showInputDialog(null, "Which node to delete?", "Delete Node", JOptionPane.PLAIN_MESSAGE, null, resto, resto[0]);
                 
                 if((op != null) && (op.length() > 0)){  // Print if confirmed
                     int index = -1;
                     for(int i=0; i<nodes.size(); i++){
-                        if(nodes.get(i).getName() == op){
+                        if(nodes.get(i) == op){
                             index = i;
                             i = nodes.size();
                         }
                     }
-                    graph.removeFS(nodes.get(index).getID());
+                    // graph.removeFS(nodes.get(index));
                     nodes.remove(index);
                     av.updateBoxes(nodes);
                 }
@@ -269,14 +295,15 @@ public class Appcontroller {
                         if((nodeA.getText().trim().length() == 1 && nodeA.getText().trim().matches("[A-Z]{1}")) && (nodeB.getText().trim().length() == 1 && nodeB.getText().trim().matches("[A-Z]{1}"))){
                             // check if Existing input
                             for(int i=0; i<nodes.size(); i++){
-                                if(nodeA.getText().trim().charAt(0) == nodes.get(i).getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                //matches ID to node input ID
+                                if(nodeA.getText().trim() == nodes.get(i)){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
                                     foundA = true;
                                     i = nodes.size(); // Force end the loop
                                 }
                             }
 
                             for(int i=0; i<nodes.size(); i++){
-                                if(nodeB.getText().trim().charAt(0) == nodes.get(i).getID()){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
+                                if(nodeB.getText().trim() == nodes.get(i)){       // Convert to char and compare with ID. *** Change this later to work with nodes ***
                                     foundB = true;
                                     i = nodes.size(); // Force end the loop
                                 }
@@ -286,7 +313,8 @@ public class Appcontroller {
                             if(foundA == true) {
                                 if(foundB == true) {
                                     if(weight.getText().matches("\\d+")) {
-                                        graph.addEdge(nodeA.getText().trim().charAt(0), nodeB.getText().trim().charAt(0), Integer.parseInt(weight.getText()));
+                                        // add edge
+                                        // graph.addEdge(nodeA.getText().trim().charAt(0), nodeB.getText().trim().charAt(0), Integer.parseInt(weight.getText()));
                                         JOptionPane.showMessageDialog(null, "Success! Added edge from " + nodeA.getText() + " to " + nodeB.getText(), "SUCCESS", JOptionPane.PLAIN_MESSAGE);
                                         // If user Selects yes, nothing happens then reset. If User selects no, exit = true and exists.
                                         if(JOptionPane.showConfirmDialog(null, "Would you like to add another node", null, JOptionPane.YES_NO_OPTION) != 0)
@@ -306,44 +334,5 @@ public class Appcontroller {
                 }while(exit == false);
             }
         });
-    }
-
-    private void runAlgorithms(char start, char goal) {
-
-        // bfs
-        // Execution time isn't needed??
-        long bfsStart = System.nanoTime();
-        List<Character> bfsPath = am.bfs(graph, start, goal);
-        long bfsEnd = System.nanoTime();
-        long bfsDuration = bfsEnd - bfsStart;
-
-        // aStar
-        long aStarStart = System.nanoTime();
-        List<Character> aStarPath = am.aStar(graph, start, goal);
-        long aStarEnd = System.nanoTime();
-        long aStarDuration = aStarEnd - aStarStart;
-
-        // Memory usage
-        int memoryUsed = (int) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024;
-
-        // Format paths to string without brackets and commas
-        String bfsFormatted = String.join(" → ", bfsPath.stream().map(Object::toString).toArray(String[]::new));
-        String aStarFormatted = String.join(" → ", aStarPath.stream().map(Object::toString).toArray(String[]::new));
-
-        av.updateBlindSearch(
-            bfsPath.size(),
-            bfsFormatted,
-            (bfsDuration >= 1_000_000 ? bfsDuration / 1_000_000 + " ms" : bfsDuration / 1_000 + " µs"),
-            memoryUsed + " KB",
-            "Yes"
-        );
-
-        av.updateHeuristicSearch(
-            aStarPath.size(),
-            aStarFormatted,
-            (aStarDuration >= 1_000_000 ? aStarDuration / 1_000_000 + " ms" : aStarDuration / 1_000 + " µs"),
-            memoryUsed + " KB",
-            "Yes"
-        );
     }
 }

@@ -10,16 +10,17 @@ import java.util.Set;
 import csintsy.file_man.ReadFile;
 
 
+
 /**
  * Graph
  */
 public class Graph {
-    public static final String FILENAME = "test.csv";
-    public static final String FILE_H = FILENAME.split("[.csv]")[0];
+    public static final String FILENAME = "distances.csv";
+    public static final String FILE_H = FILENAME.split("\\.")[0] + "_h.csv";
     ReadFile rf;
     // Map implmentation from https://www.baeldung.com/java-graphs
     private Map<Integer, ArrayList<Edge>> adjVertices;
-    private Map<String, Integer> nameToUid;
+    public Map<String, Integer> nameToUid;
     Map<Integer, Node> UidToNode;
     boolean hasHeuristicFile;
 
@@ -27,35 +28,38 @@ public class Graph {
      * Initialize Nodes and Edges within Graph constructor.
      */
     public Graph(){
-        System.out.println("FILE_H: " + FILE_H);
+        // System.out.println("FILE_H: " + FILE_H);
         rf = new ReadFile();
         hasHeuristicFile = rf.initRead(FILE_H);            // read file with node and heuristic val first
         adjVertices = new HashMap<>();
         nameToUid = new HashMap<>();
         UidToNode = new HashMap<>();
+        // printAllNodes();
         initGraph();
     };
 
     /**
      * Initialize Graph with the values read from file the file given
+     *
      */
     private void initGraph() {
         // read heuristic file first
         if (hasHeuristicFile) {
             for (List<String> row : rf.records) {
                 String nodeName = row.get(0);
-                int heuristicVal;
+                float heuristicVal;
                 try {
-                    heuristicVal = Integer.parseInt(row.get(1));
+                    heuristicVal = Float.parseFloat(row.get(1));
                 } catch (NumberFormatException e) {
                     heuristicVal = 0;
                 }
                 if (!nameToUid.containsKey(nodeName)) {
-                    Node newFromNode = new Node(nodeName, heuristicVal);
+                    Node newFromNode = new Node(nodeName, heuristicVal); 
                     addNode(newFromNode);
                 }
             }
         }
+
         // read csv containing edges of node
         rf.initRead(FILENAME);
 
@@ -114,6 +118,7 @@ public class Graph {
                 Node destNode = UidToNode.get(edge.destUid);
                 System.out.print(destNode.getName() + "[" + edge.weight + "] ");
             }
+            System.out.println();
         }
     }
 
@@ -133,6 +138,10 @@ public class Graph {
         adjVertices.remove(n.getUid());
         nameToUid.remove(n.getName());
         UidToNode.remove(n.getUid());
+    }
+
+    public int nameToUid(String name) {
+        return nameToUid.get(name);
     }
 
     public void removeNodeByUid(int uid) {
@@ -171,15 +180,15 @@ public class Graph {
         return UidToNode;
     }
 
-    public Set<String> getNodeNames() {
+    public Set<String> getAllNodeNames() {
         return nameToUid.keySet();
     }
 
-        //  A-STAR UPDATES
+    //  A-STAR UPDATES
 
-        public Integer getUidByName(String name) {
-            return nameToUid.get(name);
-        }
+    public Integer getUidByName(String name) {
+        return nameToUid.get(name);
+    }
 
     public Node getNodeByUid(int uid) {
         return UidToNode.get(uid);
@@ -189,4 +198,7 @@ public class Graph {
         return nameToUid;
     }
 
+    public Set<Integer> getAllNodeUids() {
+        return UidToNode.keySet();
+    }
 }

@@ -2,8 +2,6 @@ package csintsy;
 
 import java.util.ArrayList;
 
-import csintsy.gui.Appcontroller;
-
 public class App {
     public static void main(String[] args) {
 
@@ -13,7 +11,7 @@ public class App {
 
 
         // ArrayList<FoodSpot> nodes = new ArrayList<FoodSpot>();
-
+        //
         // nodes.add(new FoodSpot("University Mall",         'A', 1, 980, 150));
         // nodes.add(new FoodSpot("McDonald's",              'B', 1, 1015, 200));
         // nodes.add(new FoodSpot("Perico's",                'C', 1, 1030, 250));

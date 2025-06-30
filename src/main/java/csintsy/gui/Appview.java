@@ -7,20 +7,16 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.BorderFactory;
-import javax.swing.JTextArea;
 
-import csintsy.FoodSpot;
 import csintsy.ResultsPane;
 
 import java.awt.Color;
-import java.awt.Image;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Appview extends JFrame{
 
@@ -32,18 +28,29 @@ public class Appview extends JFrame{
     
     // Create a new class for the results tab? Since both sections will contain the same thing IDK
 
-    private ArrayList<FoodSpot> nodes;
+    private ArrayList<String> nodes;
     
-    public Appview(ArrayList<FoodSpot> nodes){
+    public Appview(ArrayList<String> nodes){
+
+        this.nodes = new ArrayList<String>();
 
         this.nodes = nodes;
 
+        initAV();
+    }
+
+
+    private void initAV() {
+        int mapBoundX = 756;
+        int mapBoundY = 423;
         // https://stackoverflow.com/questions/56387179/java-swing-maven-how-to-load-imageicon-in-jar-file
         ImageIcon ico = new ImageIcon(getClass().getResource("/images/Icon.png"));
         this.setIconImage(ico.getImage());
         // Create the Frame
         this.setTitle("DLSU Food Map");
-        this.setSize(1239, 720);
+        setPreferredSize(new Dimension(1239, 720));
+        pack();
+        // this.setSize(1239, 720);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);  
@@ -53,11 +60,11 @@ public class Appview extends JFrame{
         mapPanel = new JPanel();
         mapPanel.setLayout(null);
         mapPanel.setBackground(Color.CYAN);
-        mapPanel.setBounds(15, 15, 756, 423);
+        mapPanel.setBounds(15, 15, mapBoundX, mapBoundY);
         
         Image img = new ImageIcon(getClass().getResource("/images/map.png")).getImage();                                     // This is the map image
-        map = new JLabel(new ImageIcon(img.getScaledInstance(756, 423, Image.SCALE_SMOOTH)));   // Scale down the map to fit within the panel
-        map.setBounds(0, 0, 756, 423);
+        map = new JLabel(new ImageIcon(img.getScaledInstance(mapBoundX, mapBoundY, Image.SCALE_SMOOTH)));   // Scale down the map to fit within the panel
+        map.setBounds(0, 0, mapBoundX, mapBoundY);
         mapPanel.add(map);
 
         boxPanel = new JPanel();
@@ -121,6 +128,7 @@ public class Appview extends JFrame{
         this.setVisible(true);
     }
 
+    // class ImageOverlayPanel extends JPanel {}
     /*
      * Method to update labels on the resultsPanel later
      */
@@ -143,7 +151,6 @@ public class Appview extends JFrame{
     /*
      * Button listeners
      */
-
     public void clrBtnActionListener(ActionListener actionListener) {
 		this.clrBtn.addActionListener(actionListener);
 	}
@@ -185,12 +192,19 @@ public class Appview extends JFrame{
         rB.UpdateTexts(score, path, time, memory, optimal);
     }
 
-    public void updateBoxes(ArrayList<FoodSpot> nodes){
+    public void dumpNodes() {
+        System.out.println("==Dumping all nodes==");
+        for (String name : nodes) {
+            System.out.println(name);
+        }
+    }
+
+    public void updateBoxes(ArrayList<String> nodes){
         boxPanel.removeAll();
 
         cBox = new JCheckBox[this.nodes.size()];
         for (int i = 0; i < nodes.size(); i++) {
-            cBox[i] = new JCheckBox(this.nodes.get(i).getID() + " | " + this.nodes.get(i).getName());
+            cBox[i] = new JCheckBox(this.nodes.get(i) + " | " + this.nodes.get(i));
             cBox[i].setFocusable(false);
             cBox[i].setOpaque(false);
             cBox[i].setForeground(Color.BLACK);
